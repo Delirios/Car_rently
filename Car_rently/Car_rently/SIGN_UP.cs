@@ -126,24 +126,8 @@ namespace Car_rently
 
         private void button3_Click(object sender, EventArgs e)
         {
-            /*/
-            string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=car_rently;Integrated Security=True";
-
-            string sql = " if not exists(select * from client WHERE client.E_mail = '" + textBox3.Text + "') INSERT INTO car_rently.dbo.client (First_name,Last_name,Patronymic,E_mail,Phone,Password) VALUES ('" + textBox4.Text + "','" + textBox1.Text + "','" + textBox5.Text + "','" + textBox3.Text + "','" + textBox6.Text + "','" + textBox2.Text + "')";
-            //string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            string sqlExpression = "INSERT INTO car_rently.dbo.client (First_name,Last_name,Patronymic,E_mail,Phone,Password) VALUES ('" + textBox4.Text + "','" + textBox1.Text + "','" + textBox5.Text + "','" + textBox3.Text + "','" + textBox6.Text + "','" + textBox2.Text + "')";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                
-                connection.Open();
-                SqlCommand command = new SqlCommand(sql, connection);
-                int number = command.ExecuteNonQuery();
-                //Console.WriteLine("Добавлено объектов: {0}", number);
-
-    /*/
-
             string sql = "select * from client WHERE client.E_mail = '" + textBox3.Text + "'";
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -152,19 +136,33 @@ namespace Car_rently
                 if (i == 0)
                 {
 
-                    string sqlExpression = "INSERT INTO car_rently.dbo.client (First_name,Last_name,Patronymic,E_mail,Phone,Password) VALUES ('" + textBox4.Text + "','" + textBox1.Text + "','" + textBox5.Text + "','" + textBox3.Text + "','" + textBox6.Text + "','" + textBox2.Text + "')";
-                    command = new SqlCommand(sqlExpression, connection); 
-                    
+                    command.Connection = connection;
+
+                    command.CommandText = "INSERT INTO car_rently.dbo.client (First_name,Last_name,Patronymic,E_mail,Phone,Password) VALUES (@first_name,@last_name,@patronymic,@e_mail,@phone,@password)";
+                    command.Parameters.Add("@first_name", SqlDbType.NVarChar);
+                    command.Parameters.Add("@last_name", SqlDbType.NVarChar);
+                    command.Parameters.Add("@patronymic", SqlDbType.NVarChar);
+                    command.Parameters.Add("@e_mail", SqlDbType.NVarChar);
+                    command.Parameters.Add("@phone", SqlDbType.Int);
+                    command.Parameters.Add("@password", SqlDbType.Int);
+
+                    // передаем данные в команду через параметры
+                    command.Parameters["@first_name"].Value = textBox4.Text.Trim();
+                    command.Parameters["@last_name"].Value = textBox1.Text.Trim();
+                    command.Parameters["@patronymic"].Value = textBox5.Text.Trim();
+                    command.Parameters["@e_mail"].Value = textBox3.Text.Trim();
+                    command.Parameters["@phone"].Value = textBox6.Text.Trim();
+                    command.Parameters["@password"].Value = textBox2.Text.Trim();
                     command.ExecuteNonQuery();
+
+
                     MessageBox.Show("Ви успішно зареєструвалися", "Реєстрація");
 
                     this.Hide();
-
-
-                }
+                }             
                 else
                 {
-                    
+
                     MessageBox.Show("Користувач з такою поштою уже існує", "Реєстрація");
 
                 }
