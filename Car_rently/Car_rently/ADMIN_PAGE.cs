@@ -75,13 +75,23 @@ namespace Car_rently
         #region ШТРАФИ
         private void button2_Click(object sender, EventArgs e)
         {
-            string sql = "insert into penalties (penalty_name, amount_penalty) values ('" + metroTextBox5.Text + "','" + Convert.ToInt32(metroTextBox8.Text)+"')";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
 
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+
+                command.CommandText = "insert into penalties (penalty_name, amount_penalty) values (@penalty_name, @amount_penalty)";
+                command.Parameters.Add("@penalty_name", SqlDbType.NVarChar);
+                command.Parameters.Add("@amount_penalty", SqlDbType.Int);
+                // передаем данные в команду через параметры
+                command.Parameters["@penalty_name"].Value = metroTextBox5.Text;
+                command.Parameters["@amount_penalty"].Value = Convert.ToInt32(metroTextBox6.Text);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Штраф додано!");
+                metroTextBox5.Clear();
+                metroTextBox6.Clear();
             }
 
         }
@@ -89,13 +99,23 @@ namespace Car_rently
 
         private void button3_Click_1(object sender, EventArgs e)
         {
-            string sql = "insert into discounts (discount_name, discount_percent) values ('" + metroTextBox7.Text + "','" + Convert.ToInt32(metroTextBox6.Text) + "')";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                connection.Open();
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
 
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+
+                command.CommandText = "insert into discounts(discount_name, discount_percent) values(@discount_name, @discount_percent)";
+                command.Parameters.Add("@discount_name", SqlDbType.NVarChar);
+                command.Parameters.Add("@discount_percent", SqlDbType.Int);
+                // передаем данные в команду через параметры
+                command.Parameters["@discount_name"].Value = metroTextBox7.Text;
+                command.Parameters["@discount_percent"].Value = Convert.ToInt32(metroTextBox8.Text);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Знижку додано!");
+                metroTextBox7.Clear();
+                metroTextBox8.Clear();
             }
         }
 
@@ -172,6 +192,117 @@ namespace Car_rently
 
             }
             
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string sql = "SELECT * FROM cars";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                // Создаем объект DataAdapter
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+                // Создаем объект Dataset
+                DataSet ds = new DataSet();
+                // Заполняем Dataset
+                adapter.Fill(ds);
+                // Отображаем данные
+                dataGridView1.DataSource = ds.Tables[0];
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string sql = "SELECT * FROM penalties";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                // Создаем объект DataAdapter
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+                // Создаем объект Dataset
+                DataSet ds = new DataSet();
+                // Заполняем Dataset
+                adapter.Fill(ds);
+                // Отображаем данные
+                dataGridView2.DataSource = ds.Tables[0];
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string sql = "SELECT * FROM discounts";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                // Создаем объект DataAdapter
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+                // Создаем объект Dataset
+                DataSet ds = new DataSet();
+                // Заполняем Dataset
+                adapter.Fill(ds);
+                // Отображаем данные
+                dataGridView3.DataSource = ds.Tables[0];
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM cars WHERE id_car=@id", con);
+                int id = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Автомобіль видалено");
+                }
+                catch
+                {
+                    MessageBox.Show("Видалити не вдалось!");
+                }
+            }
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM penalties WHERE id_penalty=@id", con);
+                int id = int.Parse(dataGridView2.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Штраф видалено");
+                }
+                catch
+                {
+                    MessageBox.Show("Видалити не вдалось!");
+                }
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM discounts WHERE id_discount=@id", con);
+                int id = int.Parse(dataGridView3.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Знижку видалено");
+                }
+                catch
+                {
+                    MessageBox.Show("Видалити не вдалось!");
+                }
+            }
         }
     }
 }
