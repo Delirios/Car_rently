@@ -19,9 +19,17 @@ namespace Car_rently
         {
             InitializeComponent();
         }
+
+
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        public byte[] data = null;
 
+        private void label12_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
 
+        #region ЗАПОВНЕННЯ КОМБОБОКСІВ
         private void ADMIN_PAGE_Load(object sender, EventArgs e)
         {
             string sql = "SELECT * FROM car_rently.dbo.type_of_car";
@@ -41,23 +49,9 @@ namespace Car_rently
             metroComboBox2.DataSource = array;
             
         }
+        #endregion
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        #region Перетягування форми
+        #region ПЕРЕТЯГУВАННЯ ФОРМИ
         private void panel3_MouseDown(object sender, MouseEventArgs e)
         {
 
@@ -69,8 +63,6 @@ namespace Car_rently
             }
         }
         #endregion
-
-
 
         #region ШТРАФИ
         private void button2_Click(object sender, EventArgs e)
@@ -97,6 +89,7 @@ namespace Car_rently
         }
         #endregion
 
+        #region ЗНИЖКИ
         private void button3_Click_1(object sender, EventArgs e)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -118,21 +111,9 @@ namespace Car_rently
                 metroTextBox8.Clear();
             }
         }
+        #endregion
 
-
-        public byte[] data = null;
-
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-            pictureBox2.Image = Image.FromFile(openFileDialog.FileName);
-            ReadImageToBytes(openFileDialog.FileName);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-
-        }
-
+        #region ФОТО В БАЙТИ
         private byte[] ReadImageToBytes(string sPath)
         {
             FileInfo fInfo = new FileInfo(sPath);
@@ -142,7 +123,21 @@ namespace Car_rently
             data = br.ReadBytes((int)numBytes);
             return data;
         }
+        #endregion
 
+        #region ВИВІД ФОТО В PICTUREBOX
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.ShowDialog();
+            pictureBox2.Image = Image.FromFile(openFileDialog.FileName);
+            ReadImageToBytes(openFileDialog.FileName);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+
+        }
+        #endregion
+
+        #region ДОДАВАННЯ АВТО
         private void button1_Click_1(object sender, EventArgs e)
         {
             Image img = pictureBox2.Image;
@@ -193,7 +188,9 @@ namespace Car_rently
             }
             
         }
+        #endregion
 
+        #region ВСІ СЕЛЕКТИ
         private void button5_Click(object sender, EventArgs e)
         {
             string sql = "SELECT * FROM cars";
@@ -245,6 +242,45 @@ namespace Car_rently
             }
         }
 
+        private void button13_Click(object sender, EventArgs e)
+        {
+            string sql = "SELECT * FROM rent";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                // Создаем объект DataAdapter
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+                // Создаем объект Dataset
+                DataSet ds = new DataSet();
+                // Заполняем Dataset
+                adapter.Fill(ds);
+                // Отображаем данные
+                dataGridView5.DataSource = ds.Tables[0];
+            }
+
+        }
+        private void button11_Click(object sender, EventArgs e)
+        {
+
+            string sql = "SELECT * FROM client";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                // Создаем объект DataAdapter
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+                // Создаем объект Dataset
+                DataSet ds = new DataSet();
+                // Заполняем Dataset
+                adapter.Fill(ds);
+                // Отображаем данные
+                dataGridView4.DataSource = ds.Tables[0];
+            }
+
+        }
+
+        #endregion
+
+        #region ВСІ ДЕЛІТИ
         private void button8_Click(object sender, EventArgs e)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -304,5 +340,28 @@ namespace Car_rently
                 }
             }
         }
+
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                SqlCommand com = new SqlCommand("DELETE FROM client WHERE id_client=@id", con);
+                int id = int.Parse(dataGridView4.CurrentRow.Cells[0].Value.ToString());
+                com.Parameters.AddWithValue("@id", id);
+                con.Open(); //Открываем подключение
+                try
+                {
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Клієнта видалено");
+                }
+                catch
+                {
+                    MessageBox.Show("Видалити не вдалось!");
+                }
+            }
+
+        }
+        #endregion
     }
 }

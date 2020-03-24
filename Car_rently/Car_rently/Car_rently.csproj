@@ -70,6 +70,12 @@
     <Compile Include="ADMIN_START_PAGE.Designer.cs">
       <DependentUpon>ADMIN_START_PAGE.cs</DependentUpon>
     </Compile>
+    <Compile Include="MAIN_PAGE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MAIN_PAGE.Designer.cs">
+      <DependentUpon>MAIN_PAGE.cs</DependentUpon>
+    </Compile>
     <Compile Include="SIGN_UP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ADMIN_START_PAGE.resx">
       <DependentUpon>ADMIN_START_PAGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MAIN_PAGE.resx">
+      <DependentUpon>MAIN_PAGE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SIGN_UP.resx">
       <DependentUpon>SIGN_UP.cs</DependentUpon>

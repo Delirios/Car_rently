@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Car_rently
 {
@@ -16,8 +17,9 @@ namespace Car_rently
         public START_PAGE()
         {
             InitializeComponent();
-            
+
         }
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         SIGN_UP sign_up = new SIGN_UP();
 
@@ -63,6 +65,30 @@ namespace Car_rently
             this.Hide();
             new ADMIN_START_PAGE().ShowDialog();
             //this.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //string sql = "select * from client WHERE client.E_mail = '" + textBox3.Text + "'";
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "(select * from client WHERE client.E_mail = '" + textBox3.Text + "')";
+                int i = Convert.ToInt32(command.ExecuteScalar());
+                command.CommandText = "(select * from client WHERE client.password = '" + textBox2.Text + "')";
+                int j = Convert.ToInt32(command.ExecuteScalar());
+                if (i != 0 && j != 0)
+                {
+                    new MAIN_PAGE().ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("Невірний логін або пароль");
+                }
+
+            }
         }
     }
 }
