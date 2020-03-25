@@ -145,8 +145,8 @@ namespace Car_rently
             ImageConverter converter = new ImageConverter();
             arr = (byte[])converter.ConvertTo(img, typeof(byte[]));
 
-            string brand = metroTextBox1.Text;
-            string model = metroTextBox2.Text;
+            string brand_name = metroTextBox1.Text.ToUpper();
+            string model = metroTextBox2.Text.ToUpper();
             int year = Convert.ToInt32(metroComboBox2.SelectedValue.ToString());
             int cost = Convert.ToInt32(metroTextBox3.Text);
             int price = Convert.ToInt32(metroTextBox4.Text);
@@ -155,14 +155,29 @@ namespace Car_rently
             {
 
                 connection.Open();
+
                 SqlCommand command = new SqlCommand();
+
                 command.Connection = connection;
                 command.CommandText = "(SELECT Id_type FROM type_of_car WHERE type_name like '" + metroComboBox1.Text + "')";
                 string type = command.ExecuteScalar().ToString();
 
-                command.CommandText = "insert into cars (Id_type, car_brand, car_model, year_of_production, cost, price, picture) values (@type,@brand,@model,@year,@cost,@price,@picture)";
+                command.CommandText = "insert into cars_brand (brand_name) values(@brand_name)";
+
+                command.Parameters.Add("@brand_name", SqlDbType.VarChar, 30);
+                command.Parameters["@brand_name"].Value = brand_name;
+                command.ExecuteNonQuery();
+
+                command.CommandText = "(SELECT Id_brand FROM cars_brand WHERE brand_name like '" + metroTextBox1.Text + "')";
+                string brand = command.ExecuteScalar().ToString();
+
+                command.CommandText = "insert into cars (Id_type, car_model, year, cost, price, picture,Id_brand) values (@type,@model,@year,@cost,@price,@picture,@brand)";
+
+
+
+
                 command.Parameters.Add("@type", SqlDbType.Int);
-                command.Parameters.Add("@brand", SqlDbType.NVarChar, 20);
+                command.Parameters.Add("@brand", SqlDbType.Int);
                 command.Parameters.Add("@model", SqlDbType.NVarChar, 20);
                 command.Parameters.Add("@year", SqlDbType.Int);
                 command.Parameters.Add("@cost", SqlDbType.Int);
@@ -193,7 +208,7 @@ namespace Car_rently
         #region ВСІ СЕЛЕКТИ
         private void button5_Click(object sender, EventArgs e)
         {
-            string sql = "SELECT * FROM cars";
+            string sql = "SELECT Id_car, type_name,brand_name,car_model, year, cost,price, picture FROM cars JOIN type_of_car ON cars.Id_type = type_of_car.Id_type JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();

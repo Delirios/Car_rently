@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,8 +18,7 @@ namespace Car_rently
         {
             InitializeComponent();
         }
-
-
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         #region ПЕРЕТЯГУВАННЯ ФОРМИ
         private void panel1_MouseDown(object sender, MouseEventArgs e)
@@ -32,9 +33,27 @@ namespace Car_rently
         }
         #endregion
 
+
+
         private void label1_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void MAIN_PAGE_Load(object sender, EventArgs e)
+        {
+            string sql = "SELECT * FROM car_rently.dbo.cars";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd1 = new SqlCommand(sql, connection);
+                DataTable tbl1 = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(cmd1);
+                da.Fill(tbl1);
+                metroComboBox1.DataSource = tbl1;
+                metroComboBox1.DisplayMember = "car_brand";// столбец для отображения
+                metroComboBox1.ValueMember = "Id_car";//столбец с id
+                metroComboBox1.SelectedIndex = -1;
+            }
         }
     }
 }
