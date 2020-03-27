@@ -162,11 +162,17 @@ namespace Car_rently
                 command.CommandText = "(SELECT Id_type FROM type_of_car WHERE type_name like '" + metroComboBox1.Text + "')";
                 string type = command.ExecuteScalar().ToString();
 
-                command.CommandText = "insert into cars_brand (brand_name) values(@brand_name)";
 
-                command.Parameters.Add("@brand_name", SqlDbType.VarChar, 30);
-                command.Parameters["@brand_name"].Value = brand_name;
-                command.ExecuteNonQuery();
+                command.CommandText = "(SELECT Id_brand FROM cars_brand WHERE brand_name like '" + metroTextBox1.Text + "')";
+                int i = Convert.ToInt32(command.ExecuteScalar());
+                if (i == 0)
+                {
+                    command.CommandText = "insert into cars_brand (brand_name) values(@brand_name)";
+
+                    command.Parameters.Add("@brand_name", SqlDbType.VarChar, 30);
+                    command.Parameters["@brand_name"].Value = brand_name;
+                    command.ExecuteNonQuery();
+                }
 
                 command.CommandText = "(SELECT Id_brand FROM cars_brand WHERE brand_name like '" + metroTextBox1.Text + "')";
                 string brand = command.ExecuteScalar().ToString();

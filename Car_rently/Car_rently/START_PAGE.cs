@@ -81,7 +81,9 @@ namespace Car_rently
                 int j = Convert.ToInt32(command.ExecuteScalar());
                 if (i != 0 && j != 0)
                 {
+                    this.Hide();
                     new MAIN_PAGE().ShowDialog();
+
                 }
                 else
                 {

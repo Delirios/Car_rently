@@ -42,7 +42,7 @@ namespace Car_rently
 
         private void MAIN_PAGE_Load(object sender, EventArgs e)
         {
-            string sql = "SELECT * FROM car_rently.dbo.cars";
+            string sql = "SELECT TOP(1) WITH TIES *FROM cars_brand ORDER BY ROW_NUMBER()OVER(PARTITION BY brand_name ORDER BY Id_brand); ";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand cmd1 = new SqlCommand(sql, connection);
@@ -50,10 +50,11 @@ namespace Car_rently
                 SqlDataAdapter da = new SqlDataAdapter(cmd1);
                 da.Fill(tbl1);
                 metroComboBox1.DataSource = tbl1;
-                metroComboBox1.DisplayMember = "car_brand";// столбец для отображения
-                metroComboBox1.ValueMember = "Id_car";//столбец с id
+                metroComboBox1.DisplayMember = "brand_name";// столбец для отображения
+                metroComboBox1.ValueMember = "Id_brand";//столбец с id
                 metroComboBox1.SelectedIndex = -1;
             }
         }
+
     }
 }
