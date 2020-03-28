@@ -125,7 +125,7 @@
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroTabControl1.Location = new System.Drawing.Point(0, 137);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 5;
+            this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Size = new System.Drawing.Size(835, 393);
             this.metroTabControl1.TabIndex = 1;
             this.metroTabControl1.UseSelectable = true;
@@ -154,7 +154,7 @@
             this.metroTabPage1.HorizontalScrollbarSize = 10;
             this.metroTabPage1.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage1.Name = "metroTabPage1";
-            this.metroTabPage1.Size = new System.Drawing.Size(828, 351);
+            this.metroTabPage1.Size = new System.Drawing.Size(827, 351);
             this.metroTabPage1.TabIndex = 0;
             this.metroTabPage1.Text = "Додати авто";
             this.metroTabPage1.VerticalScrollbarBarColor = true;
@@ -413,7 +413,7 @@
             this.metroTabPage2.HorizontalScrollbarSize = 10;
             this.metroTabPage2.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage2.Name = "metroTabPage2";
-            this.metroTabPage2.Size = new System.Drawing.Size(828, 351);
+            this.metroTabPage2.Size = new System.Drawing.Size(827, 351);
             this.metroTabPage2.TabIndex = 1;
             this.metroTabPage2.Text = "Додати штраф або знижку";
             this.metroTabPage2.VerticalScrollbarBarColor = true;
@@ -658,7 +658,7 @@
             this.metroTabPage3.HorizontalScrollbarSize = 10;
             this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage3.Name = "metroTabPage3";
-            this.metroTabPage3.Size = new System.Drawing.Size(828, 351);
+            this.metroTabPage3.Size = new System.Drawing.Size(827, 351);
             this.metroTabPage3.TabIndex = 2;
             this.metroTabPage3.Text = "Автомобілі в базі";
             this.metroTabPage3.VerticalScrollbarBarColor = true;
@@ -721,7 +721,7 @@
             this.metroTabPage4.HorizontalScrollbarSize = 10;
             this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage4.Name = "metroTabPage4";
-            this.metroTabPage4.Size = new System.Drawing.Size(828, 351);
+            this.metroTabPage4.Size = new System.Drawing.Size(827, 351);
             this.metroTabPage4.TabIndex = 3;
             this.metroTabPage4.Text = "Штрафи і знижки";
             this.metroTabPage4.VerticalScrollbarBarColor = true;
@@ -842,7 +842,7 @@
             this.metroTabPage5.HorizontalScrollbarSize = 10;
             this.metroTabPage5.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage5.Name = "metroTabPage5";
-            this.metroTabPage5.Size = new System.Drawing.Size(828, 351);
+            this.metroTabPage5.Size = new System.Drawing.Size(827, 351);
             this.metroTabPage5.TabIndex = 4;
             this.metroTabPage5.Text = "Клієнти в базі";
             this.metroTabPage5.VerticalScrollbarBarColor = true;
