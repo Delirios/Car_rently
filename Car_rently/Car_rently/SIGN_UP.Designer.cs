@@ -92,7 +92,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel1.Location = new System.Drawing.Point(22, 175);
+            this.panel1.Location = new System.Drawing.Point(23, 140);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(300, 1);
             this.panel1.TabIndex = 14;
@@ -103,7 +103,7 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(60, 151);
+            this.textBox1.Location = new System.Drawing.Point(61, 116);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(261, 18);
             this.textBox1.TabIndex = 12;
@@ -134,7 +134,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel4.Location = new System.Drawing.Point(22, 137);
+            this.panel4.Location = new System.Drawing.Point(23, 178);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(300, 1);
             this.panel4.TabIndex = 23;
@@ -145,7 +145,7 @@
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox4.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox4.ForeColor = System.Drawing.Color.White;
-            this.textBox4.Location = new System.Drawing.Point(60, 113);
+            this.textBox4.Location = new System.Drawing.Point(61, 154);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(261, 18);
             this.textBox4.TabIndex = 21;
@@ -198,7 +198,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(261, 18);
             this.textBox5.TabIndex = 15;
-            this.textBox5.Text = "Last Name";
+            this.textBox5.Text = "Patronumic";
             this.textBox5.Click += new System.EventHandler(this.textBox5_Click);
             // 
             // panel6
@@ -245,7 +245,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::Car_rently.Properties.Resources.user__6_;
-            this.pictureBox4.Location = new System.Drawing.Point(22, 106);
+            this.pictureBox4.Location = new System.Drawing.Point(23, 147);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(32, 29);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -275,7 +275,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Car_rently.Properties.Resources.user__6_;
-            this.pictureBox1.Location = new System.Drawing.Point(22, 144);
+            this.pictureBox1.Location = new System.Drawing.Point(23, 109);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 29);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

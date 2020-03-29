@@ -144,7 +144,7 @@ namespace Car_rently
                     command.Parameters.Add("@patronymic", SqlDbType.NVarChar);
                     command.Parameters.Add("@e_mail", SqlDbType.NVarChar);
                     command.Parameters.Add("@phone", SqlDbType.Int);
-                    command.Parameters.Add("@password", SqlDbType.Int);
+                    command.Parameters.Add("@password", SqlDbType.NVarChar);
 
                     // передаем данные в команду через параметры
                     command.Parameters["@first_name"].Value = textBox4.Text.Trim();

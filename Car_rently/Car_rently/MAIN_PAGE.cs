@@ -16,12 +16,22 @@ namespace Car_rently
 {
     public partial class MAIN_PAGE : Form
     {
+    
+        public string E_mail
+        {
+            get { return label7.Text; }
+            set { label7.Text = value; }
+        }
+
         public MAIN_PAGE()
         {
             InitializeComponent();
         }
-        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
+
+
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        ORDER_PAGE order_page = new ORDER_PAGE();
         #region ПЕРЕТЯГУВАННЯ ФОРМИ
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -30,6 +40,7 @@ namespace Car_rently
                 (sender as Control).Capture = false;//picturebox не ловит событие
                 Message m = Message.Create(this.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
                 this.DefWndProc(ref m);
+                
             }
 
         }
@@ -202,6 +213,30 @@ namespace Car_rently
 
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                textBox5.Clear();
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT First_name, Last_name, Patronymic FROM client WHERE E_mail = '" + label7.Text + "'";
+                SqlDataReader thisReader = command.ExecuteReader();
+                while (thisReader.Read())
+                {
+                    order_page.First_name = thisReader["First_name"].ToString();
+                    order_page.Last_name = thisReader["Last_name"].ToString();
+                    order_page.Patronymic = thisReader["Patronymic"].ToString();
+                    
+                }
 
+                order_page.Brand = metroComboBox1.Text;
+                order_page.Model = textBox1.Text;
+                order_page.Price = textBox4.Text;
+                order_page.Show();
+
+            }
+        }
     }
 }

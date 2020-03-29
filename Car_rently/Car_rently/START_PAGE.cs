@@ -22,6 +22,7 @@ namespace Car_rently
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         SIGN_UP sign_up = new SIGN_UP();
+        MAIN_PAGE main_page = new MAIN_PAGE();
 
 
         private void button3_Click(object sender, EventArgs e)
@@ -81,8 +82,10 @@ namespace Car_rently
                 int j = Convert.ToInt32(command.ExecuteScalar());
                 if (i != 0 && j != 0)
                 {
+                    main_page.E_mail = textBox3.Text;
                     this.Hide();
-                    new MAIN_PAGE().ShowDialog();
+                    main_page.ShowDialog();
+
 
                 }
                 else
