@@ -31,7 +31,7 @@ namespace Car_rently
 
 
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        ORDER_PAGE order_page = new ORDER_PAGE();
+        
         #region ПЕРЕТЯГУВАННЯ ФОРМИ
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -89,7 +89,7 @@ namespace Car_rently
                     SqlDataReader thisReader = command.ExecuteReader();
                     while (thisReader.Read())
                     {
-                        //textBox5.Text += thisReader["Id_car"].ToString() + " ";
+                        textBox6.Text = thisReader["Id_car"].ToString();
                         textBox1.Text = thisReader["car_model"].ToString();
                         textBox2.Text = thisReader["year"].ToString();
                         textBox3.Text = thisReader["cost"].ToString();
@@ -106,6 +106,8 @@ namespace Car_rently
                         }
 
                     }
+
+
 
                 }
                 count++;
@@ -133,7 +135,7 @@ namespace Car_rently
                     SqlDataReader thisReader = command.ExecuteReader();
                     while (thisReader.Read())
                     {
-                        //textBox5.Text += thisReader["Id_car"].ToString() + " ";
+                        textBox6.Text = thisReader["Id_car"].ToString();
                         textBox1.Text = thisReader["car_model"].ToString();
                         textBox2.Text = thisReader["year"].ToString();
                         textBox3.Text = thisReader["cost"].ToString();
@@ -191,7 +193,8 @@ namespace Car_rently
                 SqlDataReader thisReader = command.ExecuteReader();
                 while (thisReader.Read())
                 {
-                    textBox5.Text += thisReader["Id_car"].ToString()+ " "; 
+                    textBox5.Text += thisReader["Id_car"].ToString()+ " ";
+                    textBox6.Text = thisReader["Id_car"].ToString();
                     textBox1.Text = thisReader["car_model"].ToString();
                     textBox2.Text = thisReader["year"].ToString();
                     textBox3.Text = thisReader["cost"].ToString();
@@ -215,6 +218,7 @@ namespace Car_rently
 
         private void button3_Click(object sender, EventArgs e)
         {
+            ORDER_PAGE order_page = new ORDER_PAGE();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 textBox5.Clear();
@@ -230,10 +234,13 @@ namespace Car_rently
                     order_page.Patronymic = thisReader["Patronymic"].ToString();
                     
                 }
-
+                
                 order_page.Brand = metroComboBox1.Text;
                 order_page.Model = textBox1.Text;
                 order_page.Price = textBox4.Text;
+                order_page.E_mail = label7.Text;
+                order_page.Id_car = Convert.ToInt32( textBox6.Text);
+
                 order_page.Show();
 
             }

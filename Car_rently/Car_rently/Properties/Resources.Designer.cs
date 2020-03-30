@@ -73,6 +73,16 @@ namespace Car_rently.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _94_1024x328 {
+            get {
+                object obj = ResourceManager.GetObject("94-1024x328", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap call {
             get {
                 object obj = ResourceManager.GetObject("call", resourceCulture);

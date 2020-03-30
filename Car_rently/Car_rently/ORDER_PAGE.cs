@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,8 @@ namespace Car_rently
 {
     public partial class ORDER_PAGE : Form
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
         public string Last_name
         {
             get { return label1.Text; }
@@ -43,18 +47,77 @@ namespace Car_rently
             get { return label7.Text; }
             set { label7.Text = value; }
         }
+        private string e_mail;
+        public string E_mail
+        {
+            get { return e_mail; }
+            set { e_mail = value; }
+        }
+        private int id_car;
+        public int Id_car
+        {
+            get {return id_car; }
+            set { id_car = value; }
+        }
 
         public ORDER_PAGE()
         {
             InitializeComponent();
         }
 
+
+
         private void button3_Click(object sender, EventArgs e)
         {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand();
+
+                    command.Connection = connection;
+                    command.CommandText = "(SELECT Id_client FROM client WHERE E_mail like '" + e_mail + "')";
+                    string Id_client = command.ExecuteScalar().ToString();
+                    command.CommandText = "(SELECT Id_discount FROM discounts WHERE discount_name like'" + metroComboBox1.Text + "')";
+                    string Id_discount = command.ExecuteScalar().ToString();
+
+
+                    command.Connection = connection;
+                    command.CommandText = "INSERT INTO rent (Id_client, Id_car, Id_discount, lease_date, return_date, rental_days, total_amount) values (@Id_client,@Id_car,@Id_discount,@lease_date,@return_date,@rental_days,@total_amount)";
+
+
+
+                    command.Parameters.Add("@Id_client", SqlDbType.Int);
+                    command.Parameters.Add("@Id_car", SqlDbType.Int);
+                    command.Parameters.Add("@Id_discount", SqlDbType.Int);
+                    command.Parameters.Add("@lease_date", SqlDbType.Date);
+                    command.Parameters.Add("@return_date", SqlDbType.Date);
+                    command.Parameters.Add("@rental_days", SqlDbType.Int);
+                    command.Parameters.Add("@total_amount", SqlDbType.Float);
+
+                    // передаем данные в команду через параметры
+                    command.Parameters["@Id_client"].Value = Id_client;
+                    command.Parameters["@Id_car"].Value = id_car;
+                    command.Parameters["@Id_discount"].Value = Id_discount;
+                    command.Parameters["@lease_date"].Value = metroDateTime1.Value;
+                    command.Parameters["@return_date"].Value = metroDateTime2.Value;
+                    command.Parameters["@rental_days"].Value = label15.Text;
+                    command.Parameters["@total_amount"].Value = label20.Text;
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Авто заброньвано!");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Некоректний ввід!");
+            }
 
         }
 
-        private void metroDateTime2_ValueChanged(object sender, EventArgs e)
+            private void metroDateTime2_ValueChanged(object sender, EventArgs e)
         {
             DateTime start = metroDateTime1.Value;
             DateTime end = metroDateTime2.Value;
@@ -74,5 +137,91 @@ namespace Car_rently
             DateTime dateTime = metroDateTime1.Value;
             metroDateTime2.MinDate = dateTime;
         }
+
+        private void ORDER_PAGE_Load(object sender, EventArgs e)
+        {
+           
+            string sql = "SELECT * FROM discounts;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd1 = new SqlCommand(sql, connection);
+                DataTable tbl1 = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(cmd1);
+                da.Fill(tbl1);
+                metroComboBox1.DataSource = tbl1;
+
+                metroComboBox1.DisplayMember = "discount_name";// столбец для отображения
+                metroComboBox1.ValueMember = "Id_discount";//столбец с id
+                metroComboBox1.SelectedIndex = -1;
+                label18.Text = "0";
+                
+            }
+            
+        }
+
+        private void metroComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (metroComboBox1.SelectedIndex != -1)
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "SELECT discount_percent FROM discounts WHERE discount_name = '" + metroComboBox1.Text + "'";
+                    SqlDataReader thisReader = command.ExecuteReader();
+                    while (thisReader.Read())
+                    {
+                        label18.Text = thisReader["discount_percent"].ToString();
+
+                    }
+                }
+            }
+
+            else
+            {
+                label18.Text = "";
+            }
+            if (label18.Text != "")
+            {
+                try
+                {
+                    float percent = Convert.ToInt32(label18.Text);
+                    float price = Convert.ToInt32(label6.Text);
+                    float result = price * (percent  / 100);
+                    float total_price = price - result; 
+                    label20.Text = total_price.ToString();
+                }
+                catch
+                {
+                    //wMessageBox.Show("Не всі поля заповнені");
+                }
+            }
+
+
+
+        }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void label22_Click(object sender, EventArgs e)
+        {
+
+        }
+        #region ПЕРЕТЯГУВАННЯ ФОРМИ
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                (sender as Control).Capture = false;//picturebox не ловит событие
+                Message m = Message.Create(this.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
+                this.DefWndProc(ref m);
+            }
+        }
+        #endregion
     }
 }
