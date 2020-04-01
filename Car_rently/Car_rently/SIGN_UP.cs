@@ -26,6 +26,8 @@ namespace Car_rently
 
         private void label2_Click(object sender, EventArgs e)
         {
+            Form start_page = Application.OpenForms[0];
+            start_page.Show();
             this.Close();
 
         }
@@ -157,8 +159,9 @@ namespace Car_rently
 
 
                     MessageBox.Show("Ви успішно зареєструвалися", "Реєстрація");
-
-                    this.Hide();
+                    Form start_page = Application.OpenForms[0];
+                    start_page.Show();
+                    this.Close();
                 }             
                 else
                 {

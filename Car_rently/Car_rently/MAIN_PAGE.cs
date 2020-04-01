@@ -248,9 +248,9 @@ namespace Car_rently
 
         private void button4_Click(object sender, EventArgs e)
         {
-            START_PAGE start_page = new START_PAGE();
-            this.Hide();
-            start_page.ShowDialog();
+            Form start_page = Application.OpenForms[0];
+            start_page.Show();
+            this.Close();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -273,8 +273,10 @@ namespace Car_rently
 
             PERSONAL_OFFICE personal_office = new PERSONAL_OFFICE();
             personal_office.Id_client = id_client;
+            personal_office.Closed += (s, a) => this.Show();
             this.Hide();
             personal_office.ShowDialog();
+
         }
     }
 }

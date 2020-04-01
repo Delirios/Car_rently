@@ -21,15 +21,18 @@ namespace Car_rently
         }
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        SIGN_UP sign_up = new SIGN_UP();
-        MAIN_PAGE main_page = new MAIN_PAGE();
+
+
 
 
         private void button3_Click(object sender, EventArgs e)
         {
+            SIGN_UP sign_up = new SIGN_UP();
+
+           
             this.Hide();
-            new SIGN_UP().ShowDialog();
-            this.Show();
+            sign_up.ShowDialog();
+
 
         }
 
@@ -63,8 +66,10 @@ namespace Car_rently
 
         private void button4_Click(object sender, EventArgs e)
         {
+            ADMIN_START_PAGE admin_page = new ADMIN_START_PAGE();
+            //admin_page.Closed += (s, a) => this.Show();
             this.Hide();
-            new ADMIN_START_PAGE().ShowDialog();
+            admin_page.ShowDialog();
             //this.Show();
         }
 
@@ -72,6 +77,7 @@ namespace Car_rently
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                MAIN_PAGE main_page = new MAIN_PAGE();
                 //string sql = "select * from client WHERE client.E_mail = '" + textBox3.Text + "'";
                 connection.Open();
                 SqlCommand command = new SqlCommand();

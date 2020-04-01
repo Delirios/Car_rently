@@ -17,9 +17,11 @@ namespace Car_rently
             InitializeComponent();
         }
 
-        ADMIN_PAGE AdminForm = new ADMIN_PAGE();
+        
         private void label2_Click(object sender, EventArgs e)
         {
+            Form start_page = Application.OpenForms[0];
+            start_page.Show();
             this.Close();
         }
 
@@ -51,8 +53,9 @@ namespace Car_rently
             
             if (textBox1.Text == "1" && textBox2.Text == "1") //"если" в поле1 значение "user" и если в поле2 значение "pass" P.S user - логин ; pass - пароль!!!
             {
-                AdminForm.Show();
-                this.Hide();
+                ADMIN_PAGE admin_page = new ADMIN_PAGE();
+                admin_page.Show();
+                this.Close();
 
             }
             else //иначе
