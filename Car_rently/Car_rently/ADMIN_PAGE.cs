@@ -44,7 +44,18 @@ namespace Car_rently
                 metroComboBox1.ValueMember = "Id_type";//столбец с id
                 metroComboBox1.SelectedIndex = -1;
             }
-
+            string sql_penalties = "SELECT * from penalties";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand cmd1 = new SqlCommand(sql_penalties, connection);
+                DataTable tbl1 = new DataTable();
+                SqlDataAdapter da = new SqlDataAdapter(cmd1);
+                da.Fill(tbl1);
+                checkedListBox1.DataSource = tbl1;
+                checkedListBox1.DisplayMember = "penalty_name";// столбец для отображения
+                checkedListBox1.ValueMember = "Id_penalty";//столбец с id
+                //metroComboBox1.SelectedIndex = -1;
+            }
             int[] array = Enumerable.Range(2000, 20).ToArray();
             metroComboBox2.DataSource = array;
             
@@ -385,5 +396,9 @@ namespace Car_rently
         }
         #endregion
 
+        private void button14_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
