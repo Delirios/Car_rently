@@ -80,34 +80,65 @@ namespace Car_rently
 
                     command.Connection = connection;
                     command.CommandText = "(SELECT Id_client FROM client WHERE E_mail like '" + e_mail + "')";
-                    string Id_client = command.ExecuteScalar().ToString();
-                    command.CommandText = "(SELECT Id_discount FROM discounts WHERE discount_name like'" + metroComboBox1.Text + "')";
-                    string Id_discount = command.ExecuteScalar().ToString();
+                    int Id_client = Convert.ToInt32(command.ExecuteScalar());
+                    int Id_discount = 0;
+                    try
+                    {
+                        command.CommandText = "(SELECT Id_discount FROM discounts WHERE discount_name like'" + metroComboBox1.Text + "')";
+                        Id_discount = Convert.ToInt32(command.ExecuteScalar());
+                    }
+                    catch
+                    {
+                    }
+
+                    if (Convert.ToInt32(Id_discount) != 0)
+                    {
+                        command.Connection = connection;
+                        command.CommandText = "INSERT INTO rent (Id_client, Id_car, Id_discount, lease_date, return_date, rental_days, total_amount) values (@Id_client,@Id_car,@Id_discount,@lease_date,@return_date,@rental_days,@total_amount)";
 
 
-                    command.Connection = connection;
-                    command.CommandText = "INSERT INTO rent (Id_client, Id_car, Id_discount, lease_date, return_date, rental_days, total_amount) values (@Id_client,@Id_car,@Id_discount,@lease_date,@return_date,@rental_days,@total_amount)";
+                        command.Parameters.Add("@Id_client", SqlDbType.Int);
+                        command.Parameters.Add("@Id_car", SqlDbType.Int);
+                        command.Parameters.Add("@Id_discount", SqlDbType.Int);
+                        command.Parameters.Add("@lease_date", SqlDbType.Date);
+                        command.Parameters.Add("@return_date", SqlDbType.Date);
+                        command.Parameters.Add("@rental_days", SqlDbType.Int);
+                        command.Parameters.Add("@total_amount", SqlDbType.Float);
 
+                        // передаем данные в команду через параметры
+                        command.Parameters["@Id_client"].Value = Id_client;
+                        command.Parameters["@Id_car"].Value = id_car;
+                        command.Parameters["@Id_discount"].Value = Id_discount;
+                        command.Parameters["@lease_date"].Value = metroDateTime1.Value;
+                        command.Parameters["@return_date"].Value = metroDateTime2.Value;
+                        command.Parameters["@rental_days"].Value = label15.Text;
+                        command.Parameters["@total_amount"].Value = label20.Text;
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Авто заброньвано!");
+                    }
+                    else
+                    {
+                        command.Connection = connection;
+                        command.CommandText = "INSERT INTO rent (Id_client, Id_car,lease_date, return_date, rental_days, total_amount) values (@Id_client,@Id_car,@lease_date,@return_date,@rental_days,@total_amount)";
 
+                        command.Parameters.Add("@Id_client", SqlDbType.Int);
+                        command.Parameters.Add("@Id_car", SqlDbType.Int);
+                        command.Parameters.Add("@lease_date", SqlDbType.Date);
+                        command.Parameters.Add("@return_date", SqlDbType.Date);
+                        command.Parameters.Add("@rental_days", SqlDbType.Int);
+                        command.Parameters.Add("@total_amount", SqlDbType.Float);
 
-                    command.Parameters.Add("@Id_client", SqlDbType.Int);
-                    command.Parameters.Add("@Id_car", SqlDbType.Int);
-                    command.Parameters.Add("@Id_discount", SqlDbType.Int);
-                    command.Parameters.Add("@lease_date", SqlDbType.Date);
-                    command.Parameters.Add("@return_date", SqlDbType.Date);
-                    command.Parameters.Add("@rental_days", SqlDbType.Int);
-                    command.Parameters.Add("@total_amount", SqlDbType.Float);
-
-                    // передаем данные в команду через параметры
-                    command.Parameters["@Id_client"].Value = Id_client;
-                    command.Parameters["@Id_car"].Value = id_car;
-                    command.Parameters["@Id_discount"].Value = Id_discount;
-                    command.Parameters["@lease_date"].Value = metroDateTime1.Value;
-                    command.Parameters["@return_date"].Value = metroDateTime2.Value;
-                    command.Parameters["@rental_days"].Value = label15.Text;
-                    command.Parameters["@total_amount"].Value = label20.Text;
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("Авто заброньвано!");
+                        // передаем данные в команду через параметры
+                        command.Parameters["@Id_client"].Value = Id_client;
+                        command.Parameters["@Id_car"].Value = id_car;
+                        command.Parameters["@lease_date"].Value = metroDateTime1.Value;
+                        command.Parameters["@return_date"].Value = metroDateTime2.Value;
+                        command.Parameters["@rental_days"].Value = label15.Text;
+                        command.Parameters["@total_amount"].Value = label20.Text;
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Авто заброньвано!");
+                    }
+                    this.Close();
                 }
             }
             catch
@@ -128,6 +159,26 @@ namespace Car_rently
             int second = int.Parse(label7.Text);
             int price = first * second;
             label6.Text = price.ToString();
+            try
+            {
+                if (label18.Text == "0")
+                {
+                    label20.Text = label6.Text;
+                }
+                if (label20.Text != "")
+                {
+                    float percent = Convert.ToInt32(label18.Text);
+                    float price_per_day = Convert.ToInt32(label6.Text);
+                    float total_result = price * (percent / 100);
+                    float total_price = price_per_day - total_result;
+                    label20.Text = total_price.ToString();
+                }
+            }
+            catch
+            {
+
+            }
+            
         }
 
         
@@ -136,6 +187,35 @@ namespace Car_rently
             metroDateTime1.MinDate = DateTime.Now;
             DateTime dateTime = metroDateTime1.Value;
             metroDateTime2.MinDate = dateTime;
+
+            DateTime start = metroDateTime1.Value;
+            DateTime end = metroDateTime2.Value;
+            TimeSpan result = (end - start).Duration();
+            label15.Text = ($"{result.Days + 1}");
+
+            int first = int.Parse($"{result.Days + 1}");
+            int second = int.Parse(label7.Text);
+            int price = first * second;
+            label6.Text = price.ToString();
+            try
+            {
+                if (label18.Text == "0")
+                {
+                    label20.Text = label6.Text;
+                }
+                if (label20.Text != "")
+                {
+                    float percent = Convert.ToInt32(label18.Text);
+                    float price_per_day = Convert.ToInt32(label6.Text);
+                    float total_result = price * (percent / 100);
+                    float total_price = price_per_day - total_result;
+                    label20.Text = total_price.ToString();
+                }
+            }
+            catch
+            {
+
+            }
         }
 
         private void ORDER_PAGE_Load(object sender, EventArgs e)
@@ -177,19 +257,19 @@ namespace Car_rently
                     }
                 }
             }
-
+            /*/
             else
             {
                 label18.Text = "";
-            }
+            }/*/
             if (label18.Text != "")
             {
                 try
                 {
                     float percent = Convert.ToInt32(label18.Text);
-                    float price = Convert.ToInt32(label6.Text);
-                    float result = price * (percent  / 100);
-                    float total_price = price - result; 
+                    float price_per_day = Convert.ToInt32(label6.Text);
+                    float total_result = price_per_day * (percent  / 100);
+                    float total_price = price_per_day - total_result; 
                     label20.Text = total_price.ToString();
                 }
                 catch
@@ -197,6 +277,8 @@ namespace Car_rently
                     //wMessageBox.Show("Не всі поля заповнені");
                 }
             }
+
+
 
 
 

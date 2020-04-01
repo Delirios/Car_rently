@@ -82,6 +82,12 @@
     <Compile Include="ORDER_PAGE.Designer.cs">
       <DependentUpon>ORDER_PAGE.cs</DependentUpon>
     </Compile>
+    <Compile Include="PERSONAL_OFFICE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PERSONAL_OFFICE.Designer.cs">
+      <DependentUpon>PERSONAL_OFFICE.cs</DependentUpon>
+    </Compile>
     <Compile Include="SIGN_UP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ORDER_PAGE.resx">
       <DependentUpon>ORDER_PAGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PERSONAL_OFFICE.resx">
+      <DependentUpon>PERSONAL_OFFICE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SIGN_UP.resx">
       <DependentUpon>SIGN_UP.cs</DependentUpon>

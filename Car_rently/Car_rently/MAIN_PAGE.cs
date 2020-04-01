@@ -245,5 +245,36 @@ namespace Car_rently
 
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            START_PAGE start_page = new START_PAGE();
+            this.Hide();
+            start_page.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            int id_client = 0;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "(SELECT Id_client FROM client WHERE E_mail = '" + label7.Text + "')";
+                    id_client = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            catch { }
+
+
+
+            PERSONAL_OFFICE personal_office = new PERSONAL_OFFICE();
+            personal_office.Id_client = id_client;
+            this.Hide();
+            personal_office.ShowDialog();
+        }
     }
 }
