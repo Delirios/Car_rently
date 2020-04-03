@@ -58,7 +58,8 @@ namespace Car_rently
             }
             int[] array = Enumerable.Range(2000, 20).ToArray();
             metroComboBox2.DataSource = array;
-            
+            checkedListBox1.CheckOnClick = true;
+
         }
         #endregion
 
@@ -218,7 +219,7 @@ namespace Car_rently
                 metroTextBox4.Clear();
 
             }
-            
+
         }
         #endregion
 
@@ -398,7 +399,186 @@ namespace Car_rently
 
         private void button14_Click(object sender, EventArgs e)
         {
-            
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                connection.Open();
+
+                SqlCommand command = new SqlCommand();
+
+                command.Connection = connection;
+                command.CommandText = "(SELECT Id_rent, brand_name,car_model,lease_date,return_date,total_amount FROM rent JOIN client ON rent.Id_client = client.Id_client JOIN cars ON rent.Id_car = cars.Id_car JOIN cars_brand ON cars.Id_brand = cars_brand.Id_brand WHERE E_mail = '" + metroTextBox9.Text + "')";
+                SqlDataReader thisReader = command.ExecuteReader();
+                while (thisReader.Read())
+                {
+                    label30.Text = thisReader["Id_rent"].ToString();
+                    label18.Text = thisReader["brand_name"].ToString();
+                    label20.Text = thisReader["car_model"].ToString();
+                    label23.Text = Convert.ToDateTime(thisReader["lease_date"]).ToShortDateString();
+                    label24.Text = Convert.ToDateTime(thisReader["return_date"]).ToShortDateString();
+                    label29.Text = thisReader["total_amount"].ToString();
+
+                }
+
+            }
+            if (checkedListBox1.CheckedItems.Count == 0)
+            {
+                label28.Text = "0";
+            }
+            label16.Text = label29.Text;
+
+
+        }     
+
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            int summ = 0;
+            int index = 0;
+            foreach (int indexChecked in checkedListBox1.CheckedIndices)
+            {
+                index += indexChecked;
+            }
+            if (index != 0)
+            {
+
+
+                foreach (object item in checkedListBox1.CheckedItems)
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+
+                        connection.Open();
+
+                        SqlCommand command = new SqlCommand();
+                        command.Connection = connection;
+
+                        string curItemString = ((DataRowView)item)[checkedListBox1.DisplayMember].ToString();
+                        // выполняем действия со строкой
+                        command.CommandText = "(SELECT amount_penalty FROM penalties WHERE penalty_name = '" + curItemString + "')";
+
+                        SqlDataReader thisReader = command.ExecuteReader();
+                        while (thisReader.Read())
+                        {
+
+                            summ += Convert.ToInt32(thisReader["amount_penalty"]);
+
+                        }
+                    }
+                }
+                label28.Text = summ.ToString();
+            }
+            else { label28.Text = "0"; }
+            try
+            {
+
+                if (label28.Text != "0")
+                {
+                    double first = Convert.ToDouble(label29.Text);
+                    double second = Convert.ToDouble(label28.Text);
+                    double result = first + second;
+                    label16.Text = result.ToString();
+                }
+                else { label16.Text = label29.Text; }
+            }
+            catch
+            {
+                label28.Text = "0";
+                MessageBox.Show("Введіть E_mail!");
+            }
         }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+
+            string penalty = "";
+            foreach (object item in checkedListBox1.CheckedItems)
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+
+                    string curItemString = ((DataRowView)item)[checkedListBox1.DisplayMember].ToString();
+                    // выполняем действия со строкой
+                    command.CommandText = "(SELECT Id_penalty FROM penalties WHERE penalty_name = '" + curItemString + "')";
+
+                    SqlDataReader thisReader = command.ExecuteReader();
+                    while (thisReader.Read())
+                    {
+
+                        penalty += thisReader["Id_penalty"].ToString() + " ";
+
+                    }
+                }
+
+            }
+            int rent = Convert.ToInt32(label30.Text);
+            int[] arr = penalty.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => int.Parse(k.Trim())).ToArray();
+            if (arr.Length != 0)
+            {
+                for (int i = 0; i < arr.Length; i++)
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+                        SqlCommand command = new SqlCommand();
+                        command.Connection = connection;
+
+                        int pen = arr[i];
+                        command.CommandText = "insert into rent_penalty (Id_penalty, Id_rent) values(@Id_penalty,@Id_rent)";
+
+
+
+
+                        command.Parameters.Add("@Id_penalty", SqlDbType.Int);
+                        command.Parameters.Add("@Id_rent", SqlDbType.Int);
+
+                        command.Parameters["@Id_penalty"].Value = pen;
+                        command.Parameters["@Id_rent"].Value = rent;
+
+                        command.ExecuteNonQuery();
+                        double amount = Convert.ToDouble(label16.Text);
+                        command.CommandText = "UPDATE rent SET total_amount = '" +Math.Round(amount) + "' WHERE Id_rent = '" + rent + "';";
+                        command.ExecuteNonQuery();                        
+
+
+
+
+                    }
+                }
+            }
+            else
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand();
+                    command.Connection = connection;
+                    command.CommandText = "insert into rent_penalty ( Id_rent) values(@Id_rent)";
+
+                    command.Parameters.Add("@Id_rent", SqlDbType.Int);
+
+                    command.Parameters["@Id_rent"].Value = rent;
+
+                    command.ExecuteNonQuery();
+
+
+
+
+                }
+            }
+
+            MessageBox.Show("Замовлення закрито!");
+            ADMIN_PAGE admin = new ADMIN_PAGE();
+            this.Close();
+            admin.Show();
+
+
+        }
+
     }
 }
