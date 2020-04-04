@@ -82,11 +82,9 @@ namespace Car_rently
                 connection.Open();
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "(select * from client WHERE client.E_mail = '" + textBox3.Text + "')";
+                command.CommandText = "(SELECT * FROM client WHERE E_mail = '"+ textBox3.Text +"' AND Password = '" + textBox2.Text + "')";
                 int i = Convert.ToInt32(command.ExecuteScalar());
-                command.CommandText = "(select * from client WHERE client.password = '" + textBox2.Text + "')";
-                int j = Convert.ToInt32(command.ExecuteScalar());
-                if (i != 0 && j != 0)
+                if (i != 0 )
                 {
                     main_page.E_mail = textBox3.Text;
                     this.Hide();
@@ -100,6 +98,15 @@ namespace Car_rently
                 }
 
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FORGOT_PASSWORD_PAGE forgot_password = new FORGOT_PASSWORD_PAGE();
+
+
+            this.Hide();
+            forgot_password.ShowDialog();
         }
     }
 }

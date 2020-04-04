@@ -277,7 +277,7 @@ namespace Car_rently
 
         private void button13_Click(object sender, EventArgs e)
         {
-            string sql = "SELECT * FROM rent";
+            string sql = "SELECT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NULL";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -407,8 +407,10 @@ namespace Car_rently
                 SqlCommand command = new SqlCommand();
 
                 command.Connection = connection;
-                command.CommandText = "(SELECT Id_rent, brand_name,car_model,lease_date,return_date,total_amount FROM rent JOIN client ON rent.Id_client = client.Id_client JOIN cars ON rent.Id_car = cars.Id_car JOIN cars_brand ON cars.Id_brand = cars_brand.Id_brand WHERE E_mail = '" + metroTextBox9.Text + "')";
+                command.CommandText = "(SELECT rent.Id_rent, brand_name,picture,car_model,lease_date,return_date,total_amount FROM rent JOIN client ON rent.Id_client = client.Id_client JOIN cars ON rent.Id_car = cars.Id_car lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent JOIN cars_brand ON cars.Id_brand = cars_brand.Id_brand WHERE E_mail = '" + metroTextBox9.Text + "' AND rent_penalty.Id_rent IS NULL)";
+                int i = Convert.ToInt32(command.ExecuteScalar());
                 SqlDataReader thisReader = command.ExecuteReader();
+
                 while (thisReader.Read())
                 {
                     label30.Text = thisReader["Id_rent"].ToString();
@@ -417,10 +419,25 @@ namespace Car_rently
                     label23.Text = Convert.ToDateTime(thisReader["lease_date"]).ToShortDateString();
                     label24.Text = Convert.ToDateTime(thisReader["return_date"]).ToShortDateString();
                     label29.Text = thisReader["total_amount"].ToString();
+                    byte[] picbyte = thisReader["picture"] as byte[] ?? null;
+                    if (picbyte != null)
+                    {
+                        MemoryStream mstream = new MemoryStream(picbyte);
+                        pictureBox3.Image = System.Drawing.Image.FromStream(mstream);
+                        {
+                            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(mstream);
+                            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+                        }
+                    }
+
 
                 }
-
+                if (i == 0)
+                {
+                    MessageBox.Show("Замовлення з таким E_mail не існує!");
+                }
             }
+                
             if (checkedListBox1.CheckedItems.Count == 0)
             {
                 label28.Text = "0";
@@ -580,5 +597,26 @@ namespace Car_rently
 
         }
 
+        private void button16_Click(object sender, EventArgs e)
+        {
+            string sql = "SELECT DISTINCT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NOT NULL";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                // Создаем объект DataAdapter
+                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
+                // Создаем объект Dataset
+                DataSet ds = new DataSet();
+                // Заполняем Dataset
+                adapter.Fill(ds);
+                // Отображаем данные
+                dataGridView6.DataSource = ds.Tables[0];
+            }
+        }
+
+        private void metroTextBox9_Click(object sender, EventArgs e)
+        {
+            metroTextBox9.Clear();
+        }
     }
 }

@@ -30,7 +30,13 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
+            this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
+            this.button13 = new System.Windows.Forms.Button();
+            this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.metroTabPage7 = new MetroFramework.Controls.MetroTabPage();
+            this.label30 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -95,18 +101,17 @@
             this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.metroTabPage6 = new MetroFramework.Controls.MetroTabPage();
-            this.button13 = new System.Windows.Forms.Button();
-            this.dataGridView5 = new System.Windows.Forms.DataGridView();
+            this.metroTabPage8 = new MetroFramework.Controls.MetroTabPage();
+            this.button16 = new System.Windows.Forms.Button();
+            this.dataGridView6 = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.metroTabControl1.SuspendLayout();
+            this.metroTabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.metroTabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.metroTabPage1.SuspendLayout();
@@ -121,8 +126,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.metroTabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
-            this.metroTabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            this.metroTabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -135,25 +140,69 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(835, 542);
+            this.panel1.Size = new System.Drawing.Size(887, 542);
             this.panel1.TabIndex = 0;
             // 
             // metroTabControl1
             // 
-            this.metroTabControl1.Controls.Add(this.metroTabPage6);
             this.metroTabControl1.Controls.Add(this.metroTabPage7);
+            this.metroTabControl1.Controls.Add(this.metroTabPage6);
             this.metroTabControl1.Controls.Add(this.metroTabPage1);
             this.metroTabControl1.Controls.Add(this.metroTabPage2);
             this.metroTabControl1.Controls.Add(this.metroTabPage3);
             this.metroTabControl1.Controls.Add(this.metroTabPage4);
             this.metroTabControl1.Controls.Add(this.metroTabPage5);
+            this.metroTabControl1.Controls.Add(this.metroTabPage8);
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroTabControl1.Location = new System.Drawing.Point(0, 137);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 0;
-            this.metroTabControl1.Size = new System.Drawing.Size(835, 393);
+            this.metroTabControl1.SelectedIndex = 1;
+            this.metroTabControl1.Size = new System.Drawing.Size(887, 393);
             this.metroTabControl1.TabIndex = 1;
             this.metroTabControl1.UseSelectable = true;
+            // 
+            // metroTabPage6
+            // 
+            this.metroTabPage6.Controls.Add(this.button13);
+            this.metroTabPage6.Controls.Add(this.dataGridView5);
+            this.metroTabPage6.HorizontalScrollbarBarColor = true;
+            this.metroTabPage6.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage6.HorizontalScrollbarSize = 10;
+            this.metroTabPage6.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage6.Name = "metroTabPage6";
+            this.metroTabPage6.Size = new System.Drawing.Size(879, 351);
+            this.metroTabPage6.TabIndex = 5;
+            this.metroTabPage6.Text = "Діючі замовлення";
+            this.metroTabPage6.VerticalScrollbarBarColor = true;
+            this.metroTabPage6.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage6.VerticalScrollbarSize = 10;
+            // 
+            // button13
+            // 
+            this.button13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(184)))), ((int)(((byte)(206)))));
+            this.button13.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button13.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button13.Location = new System.Drawing.Point(671, 320);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(198, 31);
+            this.button13.TabIndex = 5;
+            this.button13.Text = "Показати замовлення";
+            this.button13.UseVisualStyleBackColor = false;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // dataGridView5
+            // 
+            this.dataGridView5.AllowUserToAddRows = false;
+            this.dataGridView5.AllowUserToDeleteRows = false;
+            this.dataGridView5.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView5.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView5.Location = new System.Drawing.Point(8, 5);
+            this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.ReadOnly = true;
+            this.dataGridView5.Size = new System.Drawing.Size(861, 311);
+            this.dataGridView5.TabIndex = 4;
             // 
             // metroTabPage7
             // 
@@ -183,18 +232,52 @@
             this.metroTabPage7.HorizontalScrollbarSize = 10;
             this.metroTabPage7.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage7.Name = "metroTabPage7";
-            this.metroTabPage7.Size = new System.Drawing.Size(827, 351);
+            this.metroTabPage7.Size = new System.Drawing.Size(879, 351);
             this.metroTabPage7.TabIndex = 6;
             this.metroTabPage7.Text = "Закрити замовлення";
             this.metroTabPage7.VerticalScrollbarBarColor = true;
             this.metroTabPage7.VerticalScrollbarHighlightOnWheel = false;
             this.metroTabPage7.VerticalScrollbarSize = 10;
             // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.BackColor = System.Drawing.Color.White;
+            this.label30.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label30.ForeColor = System.Drawing.Color.White;
+            this.label30.Location = new System.Drawing.Point(425, 29);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(70, 23);
+            this.label30.TabIndex = 27;
+            this.label30.Text = "Id_rent";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.BackColor = System.Drawing.Color.Transparent;
+            this.label29.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label29.Location = new System.Drawing.Point(595, 284);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(0, 24);
+            this.label29.TabIndex = 26;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.BackColor = System.Drawing.Color.Transparent;
+            this.label27.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label27.Location = new System.Drawing.Point(425, 262);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(186, 46);
+            this.label27.TabIndex = 25;
+            this.label27.Text = "Сумма замовлення \r\nбез штрафів:\r\n";
+            // 
             // label28
             // 
             this.label28.AutoSize = true;
+            this.label28.BackColor = System.Drawing.Color.Transparent;
             this.label28.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label28.Location = new System.Drawing.Point(576, 221);
+            this.label28.Location = new System.Drawing.Point(594, 223);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(0, 24);
             this.label28.TabIndex = 24;
@@ -202,8 +285,9 @@
             // label26
             // 
             this.label26.AutoSize = true;
+            this.label26.BackColor = System.Drawing.Color.Transparent;
             this.label26.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label26.Location = new System.Drawing.Point(403, 222);
+            this.label26.Location = new System.Drawing.Point(425, 222);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(167, 23);
             this.label26.TabIndex = 22;
@@ -212,8 +296,9 @@
             // label25
             // 
             this.label25.AutoSize = true;
+            this.label25.BackColor = System.Drawing.Color.Transparent;
             this.label25.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label25.Location = new System.Drawing.Point(403, 185);
+            this.label25.Location = new System.Drawing.Point(425, 185);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(98, 23);
             this.label25.TabIndex = 21;
@@ -221,38 +306,40 @@
             // 
             // checkedListBox1
             // 
+            this.checkedListBox1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(649, 179);
+            this.checkedListBox1.Location = new System.Drawing.Point(660, 177);
             this.checkedListBox1.Name = "checkedListBox1";
-            this.checkedListBox1.Size = new System.Drawing.Size(161, 169);
+            this.checkedListBox1.Size = new System.Drawing.Size(212, 151);
             this.checkedListBox1.TabIndex = 20;
             this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
             // 
             // label24
             // 
             this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.Color.Transparent;
             this.label24.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label24.Location = new System.Drawing.Point(638, 138);
+            this.label24.Location = new System.Drawing.Point(656, 138);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(190, 24);
+            this.label24.Size = new System.Drawing.Size(0, 24);
             this.label24.TabIndex = 19;
-            this.label24.Text = "Дата повернення";
             // 
             // label23
             // 
             this.label23.AutoSize = true;
+            this.label23.BackColor = System.Drawing.Color.Transparent;
             this.label23.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label23.Location = new System.Drawing.Point(638, 96);
+            this.label23.Location = new System.Drawing.Point(656, 96);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(134, 24);
+            this.label23.Size = new System.Drawing.Size(0, 24);
             this.label23.TabIndex = 18;
-            this.label23.Text = "Дата видачі";
             // 
             // label22
             // 
             this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.Transparent;
             this.label22.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label22.Location = new System.Drawing.Point(403, 138);
+            this.label22.Location = new System.Drawing.Point(425, 138);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(176, 23);
             this.label22.TabIndex = 17;
@@ -261,8 +348,9 @@
             // label21
             // 
             this.label21.AutoSize = true;
+            this.label21.BackColor = System.Drawing.Color.Transparent;
             this.label21.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label21.Location = new System.Drawing.Point(403, 96);
+            this.label21.Location = new System.Drawing.Point(425, 96);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(129, 23);
             this.label21.TabIndex = 16;
@@ -271,18 +359,19 @@
             // label20
             // 
             this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.Transparent;
             this.label20.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label20.Location = new System.Drawing.Point(638, 53);
+            this.label20.Location = new System.Drawing.Point(656, 53);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(143, 24);
+            this.label20.Size = new System.Drawing.Size(0, 24);
             this.label20.TabIndex = 15;
-            this.label20.Text = "Модель авто";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.Transparent;
             this.label19.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label19.Location = new System.Drawing.Point(403, 6);
+            this.label19.Location = new System.Drawing.Point(425, 6);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(127, 23);
             this.label19.TabIndex = 14;
@@ -291,18 +380,19 @@
             // label18
             // 
             this.label18.AutoSize = true;
+            this.label18.BackColor = System.Drawing.Color.Transparent;
             this.label18.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label18.Location = new System.Drawing.Point(638, 6);
+            this.label18.Location = new System.Drawing.Point(656, 6);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(131, 24);
+            this.label18.Size = new System.Drawing.Size(0, 24);
             this.label18.TabIndex = 13;
-            this.label18.Text = "Марка авто";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.Transparent;
             this.label17.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label17.Location = new System.Drawing.Point(403, 53);
+            this.label17.Location = new System.Drawing.Point(425, 53);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(138, 23);
             this.label17.TabIndex = 12;
@@ -314,9 +404,9 @@
             this.button15.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button15.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button15.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button15.Location = new System.Drawing.Point(407, 318);
+            this.button15.Location = new System.Drawing.Point(435, 318);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(236, 33);
+            this.button15.Size = new System.Drawing.Size(182, 33);
             this.button15.TabIndex = 11;
             this.button15.Text = "Закрити замовлення";
             this.button15.UseVisualStyleBackColor = false;
@@ -325,16 +415,17 @@
             // label16
             // 
             this.label16.AutoSize = true;
+            this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label16.Location = new System.Drawing.Point(275, 322);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(54, 24);
+            this.label16.Size = new System.Drawing.Size(0, 24);
             this.label16.TabIndex = 10;
-            this.label16.Text = "Ціна";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
             this.label15.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label15.Location = new System.Drawing.Point(3, 322);
             this.label15.Name = "label15";
@@ -344,9 +435,9 @@
             // 
             // pictureBox3
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(3, 42);
+            this.pictureBox3.Location = new System.Drawing.Point(0, 49);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(394, 270);
+            this.pictureBox3.Size = new System.Drawing.Size(422, 270);
             this.pictureBox3.TabIndex = 8;
             this.pictureBox3.TabStop = false;
             // 
@@ -356,7 +447,7 @@
             // 
             // 
             this.metroTextBox9.CustomButton.Image = null;
-            this.metroTextBox9.CustomButton.Location = new System.Drawing.Point(174, 1);
+            this.metroTextBox9.CustomButton.Location = new System.Drawing.Point(196, 1);
             this.metroTextBox9.CustomButton.Name = "";
             this.metroTextBox9.CustomButton.Size = new System.Drawing.Size(31, 31);
             this.metroTextBox9.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
@@ -364,9 +455,10 @@
             this.metroTextBox9.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.metroTextBox9.CustomButton.UseSelectable = true;
             this.metroTextBox9.CustomButton.Visible = false;
+            this.metroTextBox9.ForeColor = System.Drawing.SystemColors.ControlText;
             this.metroTextBox9.Lines = new string[] {
         "Введіть E_mail"};
-            this.metroTextBox9.Location = new System.Drawing.Point(3, 3);
+            this.metroTextBox9.Location = new System.Drawing.Point(3, 7);
             this.metroTextBox9.MaxLength = 32767;
             this.metroTextBox9.Name = "metroTextBox9";
             this.metroTextBox9.PasswordChar = '\0';
@@ -375,12 +467,13 @@
             this.metroTextBox9.SelectionLength = 0;
             this.metroTextBox9.SelectionStart = 0;
             this.metroTextBox9.ShortcutsEnabled = true;
-            this.metroTextBox9.Size = new System.Drawing.Size(206, 33);
+            this.metroTextBox9.Size = new System.Drawing.Size(228, 23);
             this.metroTextBox9.TabIndex = 7;
             this.metroTextBox9.Text = "Введіть E_mail";
             this.metroTextBox9.UseSelectable = true;
             this.metroTextBox9.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox9.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.metroTextBox9.WaterMarkFont = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.metroTextBox9.Click += new System.EventHandler(this.metroTextBox9_Click);
             // 
             // button14
             // 
@@ -388,9 +481,9 @@
             this.button14.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button14.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button14.Location = new System.Drawing.Point(215, 3);
+            this.button14.Location = new System.Drawing.Point(237, 3);
             this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(182, 33);
+            this.button14.Size = new System.Drawing.Size(185, 40);
             this.button14.TabIndex = 6;
             this.button14.Text = "Показати замовлення";
             this.button14.UseVisualStyleBackColor = false;
@@ -420,7 +513,7 @@
             this.metroTabPage1.HorizontalScrollbarSize = 10;
             this.metroTabPage1.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage1.Name = "metroTabPage1";
-            this.metroTabPage1.Size = new System.Drawing.Size(827, 351);
+            this.metroTabPage1.Size = new System.Drawing.Size(879, 351);
             this.metroTabPage1.TabIndex = 0;
             this.metroTabPage1.Text = "Додати авто";
             this.metroTabPage1.VerticalScrollbarBarColor = true;
@@ -434,7 +527,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(36)))), ((int)(((byte)(49)))));
-            this.button1.Location = new System.Drawing.Point(693, 311);
+            this.button1.Location = new System.Drawing.Point(739, 311);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(130, 40);
             this.button1.TabIndex = 15;
@@ -449,7 +542,7 @@
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button4.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(36)))), ((int)(((byte)(49)))));
-            this.button4.Location = new System.Drawing.Point(360, 290);
+            this.button4.Location = new System.Drawing.Point(360, 321);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(206, 30);
             this.button4.TabIndex = 18;
@@ -461,7 +554,7 @@
             // 
             this.pictureBox2.Location = new System.Drawing.Point(360, 5);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(458, 283);
+            this.pictureBox2.Size = new System.Drawing.Size(509, 300);
             this.pictureBox2.TabIndex = 17;
             this.pictureBox2.TabStop = false;
             // 
@@ -679,7 +772,7 @@
             this.metroTabPage2.HorizontalScrollbarSize = 10;
             this.metroTabPage2.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage2.Name = "metroTabPage2";
-            this.metroTabPage2.Size = new System.Drawing.Size(827, 351);
+            this.metroTabPage2.Size = new System.Drawing.Size(879, 351);
             this.metroTabPage2.TabIndex = 1;
             this.metroTabPage2.Text = "Додати штраф, знижку";
             this.metroTabPage2.VerticalScrollbarBarColor = true;
@@ -700,7 +793,7 @@
             this.metroPanel1.HorizontalScrollbarSize = 10;
             this.metroPanel1.Location = new System.Drawing.Point(8, 20);
             this.metroPanel1.Name = "metroPanel1";
-            this.metroPanel1.Size = new System.Drawing.Size(385, 300);
+            this.metroPanel1.Size = new System.Drawing.Size(410, 300);
             this.metroPanel1.TabIndex = 12;
             this.metroPanel1.VerticalScrollbarBarColor = true;
             this.metroPanel1.VerticalScrollbarHighlightOnWheel = false;
@@ -812,9 +905,9 @@
             this.metroPanel2.HorizontalScrollbarBarColor = true;
             this.metroPanel2.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel2.HorizontalScrollbarSize = 10;
-            this.metroPanel2.Location = new System.Drawing.Point(432, 20);
+            this.metroPanel2.Location = new System.Drawing.Point(459, 20);
             this.metroPanel2.Name = "metroPanel2";
-            this.metroPanel2.Size = new System.Drawing.Size(385, 300);
+            this.metroPanel2.Size = new System.Drawing.Size(410, 300);
             this.metroPanel2.TabIndex = 11;
             this.metroPanel2.VerticalScrollbarBarColor = true;
             this.metroPanel2.VerticalScrollbarHighlightOnWheel = false;
@@ -924,7 +1017,7 @@
             this.metroTabPage3.HorizontalScrollbarSize = 10;
             this.metroTabPage3.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage3.Name = "metroTabPage3";
-            this.metroTabPage3.Size = new System.Drawing.Size(827, 351);
+            this.metroTabPage3.Size = new System.Drawing.Size(879, 351);
             this.metroTabPage3.TabIndex = 2;
             this.metroTabPage3.Text = "Автомобілі в базі";
             this.metroTabPage3.VerticalScrollbarBarColor = true;
@@ -951,7 +1044,7 @@
             this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(656, 320);
+            this.button5.Location = new System.Drawing.Point(708, 320);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(161, 31);
             this.button5.TabIndex = 3;
@@ -969,7 +1062,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(8, 5);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(809, 311);
+            this.dataGridView1.Size = new System.Drawing.Size(861, 311);
             this.dataGridView1.TabIndex = 2;
             // 
             // metroTabPage4
@@ -987,7 +1080,7 @@
             this.metroTabPage4.HorizontalScrollbarSize = 10;
             this.metroTabPage4.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage4.Name = "metroTabPage4";
-            this.metroTabPage4.Size = new System.Drawing.Size(827, 351);
+            this.metroTabPage4.Size = new System.Drawing.Size(879, 351);
             this.metroTabPage4.TabIndex = 3;
             this.metroTabPage4.Text = "Штрафи і знижки";
             this.metroTabPage4.VerticalScrollbarBarColor = true;
@@ -999,7 +1092,7 @@
             this.label14.AutoSize = true;
             this.label14.BackColor = System.Drawing.Color.White;
             this.label14.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label14.Location = new System.Drawing.Point(594, -2);
+            this.label14.Location = new System.Drawing.Point(631, -2);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(94, 28);
             this.label14.TabIndex = 9;
@@ -1010,7 +1103,7 @@
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.Color.White;
             this.label13.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(145, -2);
+            this.label13.Location = new System.Drawing.Point(155, -2);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(113, 28);
             this.label13.TabIndex = 8;
@@ -1022,7 +1115,7 @@
             this.button10.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button10.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button10.Location = new System.Drawing.Point(434, 320);
+            this.button10.Location = new System.Drawing.Point(459, 320);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(161, 31);
             this.button10.TabIndex = 7;
@@ -1050,7 +1143,7 @@
             this.button7.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(656, 320);
+            this.button7.Location = new System.Drawing.Point(708, 320);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(161, 31);
             this.button7.TabIndex = 5;
@@ -1064,7 +1157,7 @@
             this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(230, 320);
+            this.button6.Location = new System.Drawing.Point(257, 320);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(161, 31);
             this.button6.TabIndex = 4;
@@ -1079,10 +1172,10 @@
             this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView3.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(434, 28);
+            this.dataGridView3.Location = new System.Drawing.Point(459, 29);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(383, 288);
+            this.dataGridView3.Size = new System.Drawing.Size(410, 288);
             this.dataGridView3.TabIndex = 3;
             // 
             // dataGridView2
@@ -1095,7 +1188,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(8, 28);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(383, 288);
+            this.dataGridView2.Size = new System.Drawing.Size(410, 288);
             this.dataGridView2.TabIndex = 2;
             // 
             // metroTabPage5
@@ -1108,7 +1201,7 @@
             this.metroTabPage5.HorizontalScrollbarSize = 10;
             this.metroTabPage5.Location = new System.Drawing.Point(4, 38);
             this.metroTabPage5.Name = "metroTabPage5";
-            this.metroTabPage5.Size = new System.Drawing.Size(827, 351);
+            this.metroTabPage5.Size = new System.Drawing.Size(879, 351);
             this.metroTabPage5.TabIndex = 4;
             this.metroTabPage5.Text = "Клієнти в базі";
             this.metroTabPage5.VerticalScrollbarBarColor = true;
@@ -1135,7 +1228,7 @@
             this.button11.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button11.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button11.Location = new System.Drawing.Point(656, 320);
+            this.button11.Location = new System.Drawing.Point(708, 320);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(161, 31);
             this.button11.TabIndex = 4;
@@ -1153,51 +1246,51 @@
             this.dataGridView4.Location = new System.Drawing.Point(8, 5);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.ReadOnly = true;
-            this.dataGridView4.Size = new System.Drawing.Size(809, 311);
+            this.dataGridView4.Size = new System.Drawing.Size(861, 311);
             this.dataGridView4.TabIndex = 3;
             // 
-            // metroTabPage6
+            // metroTabPage8
             // 
-            this.metroTabPage6.Controls.Add(this.button13);
-            this.metroTabPage6.Controls.Add(this.dataGridView5);
-            this.metroTabPage6.HorizontalScrollbarBarColor = true;
-            this.metroTabPage6.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroTabPage6.HorizontalScrollbarSize = 10;
-            this.metroTabPage6.Location = new System.Drawing.Point(4, 38);
-            this.metroTabPage6.Name = "metroTabPage6";
-            this.metroTabPage6.Size = new System.Drawing.Size(827, 351);
-            this.metroTabPage6.TabIndex = 5;
-            this.metroTabPage6.Text = "Діючі замовлення";
-            this.metroTabPage6.VerticalScrollbarBarColor = true;
-            this.metroTabPage6.VerticalScrollbarHighlightOnWheel = false;
-            this.metroTabPage6.VerticalScrollbarSize = 10;
+            this.metroTabPage8.Controls.Add(this.button16);
+            this.metroTabPage8.Controls.Add(this.dataGridView6);
+            this.metroTabPage8.HorizontalScrollbarBarColor = true;
+            this.metroTabPage8.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroTabPage8.HorizontalScrollbarSize = 10;
+            this.metroTabPage8.Location = new System.Drawing.Point(4, 38);
+            this.metroTabPage8.Name = "metroTabPage8";
+            this.metroTabPage8.Size = new System.Drawing.Size(879, 351);
+            this.metroTabPage8.TabIndex = 7;
+            this.metroTabPage8.Text = "Історія";
+            this.metroTabPage8.VerticalScrollbarBarColor = true;
+            this.metroTabPage8.VerticalScrollbarHighlightOnWheel = false;
+            this.metroTabPage8.VerticalScrollbarSize = 10;
             // 
-            // button13
+            // button16
             // 
-            this.button13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(184)))), ((int)(((byte)(206)))));
-            this.button13.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button13.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button13.Location = new System.Drawing.Point(619, 320);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(198, 31);
-            this.button13.TabIndex = 5;
-            this.button13.Text = "Показати замовлення";
-            this.button13.UseVisualStyleBackColor = false;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
+            this.button16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(184)))), ((int)(((byte)(206)))));
+            this.button16.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button16.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button16.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button16.Location = new System.Drawing.Point(623, 320);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(246, 31);
+            this.button16.TabIndex = 6;
+            this.button16.Text = "Показати історію замовлень";
+            this.button16.UseVisualStyleBackColor = false;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
-            // dataGridView5
+            // dataGridView6
             // 
-            this.dataGridView5.AllowUserToAddRows = false;
-            this.dataGridView5.AllowUserToDeleteRows = false;
-            this.dataGridView5.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView5.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView5.Location = new System.Drawing.Point(8, 5);
-            this.dataGridView5.Name = "dataGridView5";
-            this.dataGridView5.ReadOnly = true;
-            this.dataGridView5.Size = new System.Drawing.Size(809, 311);
-            this.dataGridView5.TabIndex = 4;
+            this.dataGridView6.AllowUserToAddRows = false;
+            this.dataGridView6.AllowUserToDeleteRows = false;
+            this.dataGridView6.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView6.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dataGridView6.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView6.Location = new System.Drawing.Point(8, 5);
+            this.dataGridView6.Name = "dataGridView6";
+            this.dataGridView6.ReadOnly = true;
+            this.dataGridView6.Size = new System.Drawing.Size(861, 311);
+            this.dataGridView6.TabIndex = 3;
             // 
             // panel3
             // 
@@ -1210,7 +1303,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(835, 137);
+            this.panel3.Size = new System.Drawing.Size(887, 137);
             this.panel3.TabIndex = 0;
             this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
             // 
@@ -1220,7 +1313,7 @@
             this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.label12.Cursor = System.Windows.Forms.Cursors.Hand;
             this.label12.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label12.Location = new System.Drawing.Point(810, 0);
+            this.label12.Location = new System.Drawing.Point(863, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(24, 24);
             this.label12.TabIndex = 14;
@@ -1246,40 +1339,12 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label27.Location = new System.Drawing.Point(403, 262);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(186, 46);
-            this.label27.TabIndex = 25;
-            this.label27.Text = "Сумма замовлення \r\nбез штрафів:\r\n";
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label29.Location = new System.Drawing.Point(595, 284);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(0, 24);
-            this.label29.TabIndex = 26;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label30.Location = new System.Drawing.Point(718, 209);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(0, 23);
-            this.label30.TabIndex = 27;
-            // 
             // ADMIN_PAGE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(833, 542);
+            this.ClientSize = new System.Drawing.Size(885, 542);
             this.Controls.Add(this.panel1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -1288,6 +1353,8 @@
             this.Load += new System.EventHandler(this.ADMIN_PAGE_Load);
             this.panel1.ResumeLayout(false);
             this.metroTabControl1.ResumeLayout(false);
+            this.metroTabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.metroTabPage7.ResumeLayout(false);
             this.metroTabPage7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -1307,8 +1374,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.metroTabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
-            this.metroTabPage6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            this.metroTabPage8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView6)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -1395,5 +1462,8 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label30;
+        private MetroFramework.Controls.MetroTabPage metroTabPage8;
+        private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.DataGridView dataGridView6;
     }
 }

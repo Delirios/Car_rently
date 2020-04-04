@@ -70,6 +70,12 @@
     <Compile Include="ADMIN_START_PAGE.Designer.cs">
       <DependentUpon>ADMIN_START_PAGE.cs</DependentUpon>
     </Compile>
+    <Compile Include="FORGOT_PASSWORD_PAGE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORGOT_PASSWORD_PAGE.Designer.cs">
+      <DependentUpon>FORGOT_PASSWORD_PAGE.cs</DependentUpon>
+    </Compile>
     <Compile Include="MAIN_PAGE.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ADMIN_START_PAGE.resx">
       <DependentUpon>ADMIN_START_PAGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FORGOT_PASSWORD_PAGE.resx">
+      <DependentUpon>FORGOT_PASSWORD_PAGE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MAIN_PAGE.resx">
       <DependentUpon>MAIN_PAGE.cs</DependentUpon>
