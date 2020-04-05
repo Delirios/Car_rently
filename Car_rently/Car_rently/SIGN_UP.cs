@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace Car_rently
 {
@@ -152,7 +153,7 @@ namespace Car_rently
                     command.Parameters["@first_name"].Value = textBox4.Text.Trim();
                     command.Parameters["@last_name"].Value = textBox1.Text.Trim();
                     command.Parameters["@patronymic"].Value = textBox5.Text.Trim();
-                    command.Parameters["@e_mail"].Value = textBox3.Text.Trim();
+                    command.Parameters["@e_mail"].Value = textBox3.Text.Trim() + metroComboBox1.Text.Trim();
                     command.Parameters["@phone"].Value = textBox6.Text.Trim();
                     command.Parameters["@password"].Value = textBox2.Text.Trim();
                     command.ExecuteNonQuery();
@@ -173,6 +174,7 @@ namespace Car_rently
                
             //new MESSAGE_BOX().ShowDialog();
         }
+
 
         private void textBox5_Click(object sender, EventArgs e)
         {

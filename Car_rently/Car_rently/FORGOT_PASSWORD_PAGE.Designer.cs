@@ -34,6 +34,7 @@
             this.picmail = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.picmail)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,12 +110,27 @@
             this.label1.TabIndex = 32;
             this.label1.Text = "Enter your Email";
             // 
+            // metroComboBox1
+            // 
+            this.metroComboBox1.FormattingEnabled = true;
+            this.metroComboBox1.ItemHeight = 23;
+            this.metroComboBox1.Items.AddRange(new object[] {
+            "@gmail.com",
+            "@mail.ru",
+            "@yandex.ru"});
+            this.metroComboBox1.Location = new System.Drawing.Point(201, 57);
+            this.metroComboBox1.Name = "metroComboBox1";
+            this.metroComboBox1.Size = new System.Drawing.Size(121, 29);
+            this.metroComboBox1.TabIndex = 33;
+            this.metroComboBox1.UseSelectable = true;
+            // 
             // FORGOT_PASSWORD_PAGE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(36)))), ((int)(((byte)(49)))));
             this.ClientSize = new System.Drawing.Size(352, 176);
+            this.Controls.Add(this.metroComboBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel3);
@@ -139,5 +155,6 @@
         private System.Windows.Forms.PictureBox picmail;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
+        private MetroFramework.Controls.MetroComboBox metroComboBox1;
     }
 }
