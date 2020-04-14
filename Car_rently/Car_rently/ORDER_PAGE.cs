@@ -220,23 +220,37 @@ namespace Car_rently
 
         private void ORDER_PAGE_Load(object sender, EventArgs e)
         {
-           
-            string sql = "SELECT * FROM discounts;";
+            int count = 0;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand cmd1 = new SqlCommand(sql, connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                metroComboBox1.DataSource = tbl1;
-
-                metroComboBox1.DisplayMember = "discount_name";// столбец для отображения
-                metroComboBox1.ValueMember = "Id_discount";//столбец с id
-                metroComboBox1.SelectedIndex = -1;
-                label18.Text = "0";
-                
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT COUNT(Id_rent_penalty) FROM rent_penalty rp JOIN rent r ON rp.Id_rent = r.Id_rent JOIN client c ON r.Id_client = c.Id_client WHERE c.E_mail = '" + e_mail + "'";
+                count =Convert.ToInt32( command.ExecuteScalar());
             }
-            
+            if (count >= 5)
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    string sql = "SELECT * FROM discounts;";
+                    SqlCommand cmd1 = new SqlCommand(sql, connection);
+                    DataTable tbl1 = new DataTable();
+                    SqlDataAdapter da = new SqlDataAdapter(cmd1);
+                    da.Fill(tbl1);
+                    metroComboBox1.DataSource = tbl1;
+
+                    metroComboBox1.DisplayMember = "discount_name";// столбец для отображения
+                    metroComboBox1.ValueMember = "Id_discount";//столбец с id
+                    metroComboBox1.SelectedIndex = -1;
+                    label18.Text = "0";
+
+                }
+            }
+            else
+            {
+                label26.Text = ("Замовте 5 авто, щоб отримати знижку постійного клієнта");
+            }
         }
 
         private void metroComboBox1_SelectedIndexChanged(object sender, EventArgs e)

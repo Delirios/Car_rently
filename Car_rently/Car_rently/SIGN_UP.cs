@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 namespace Car_rently
 {
@@ -23,8 +24,13 @@ namespace Car_rently
         }
 
 
-        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
+        byte[] salt;
+       
+        
+
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        string hash = string.Empty;
         private void label2_Click(object sender, EventArgs e)
         {
             Form start_page = Application.OpenForms[0];
@@ -127,9 +133,21 @@ namespace Car_rently
             textBox6.ForeColor = Color.WhiteSmoke;
         }
 
+
         private void button3_Click(object sender, EventArgs e)
         {
-            string sql = "select * from client WHERE client.E_mail = '" + textBox3.Text + "'";
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(textBox2.Text, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+
+
+            string sql = "(select * from client where E_mail = '" + textBox3.Text + metroComboBox1.Text + " ') ";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -154,8 +172,8 @@ namespace Car_rently
                     command.Parameters["@last_name"].Value = textBox1.Text.Trim();
                     command.Parameters["@patronymic"].Value = textBox5.Text.Trim();
                     command.Parameters["@e_mail"].Value = textBox3.Text.Trim() + metroComboBox1.Text.Trim();
-                    command.Parameters["@phone"].Value = textBox6.Text.Trim();
-                    command.Parameters["@password"].Value = textBox2.Text.Trim();
+                    command.Parameters["@phone"].Value = textBox6.Text;
+                    command.Parameters["@password"].Value = savedPasswordHash;
                     command.ExecuteNonQuery();
 
 

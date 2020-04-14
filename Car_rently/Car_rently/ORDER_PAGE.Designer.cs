@@ -59,6 +59,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -205,7 +206,7 @@
             // metroDateTime1
             // 
             this.metroDateTime1.CalendarFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.metroDateTime1.Location = new System.Drawing.Point(14, 231);
+            this.metroDateTime1.Location = new System.Drawing.Point(14, 218);
             this.metroDateTime1.MinDate = new System.DateTime(2020, 3, 29, 0, 0, 0, 0);
             this.metroDateTime1.MinimumSize = new System.Drawing.Size(0, 29);
             this.metroDateTime1.Name = "metroDateTime1";
@@ -216,7 +217,7 @@
             // metroDateTime2
             // 
             this.metroDateTime2.CalendarFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.metroDateTime2.Location = new System.Drawing.Point(224, 231);
+            this.metroDateTime2.Location = new System.Drawing.Point(224, 218);
             this.metroDateTime2.MinimumSize = new System.Drawing.Size(0, 29);
             this.metroDateTime2.Name = "metroDateTime2";
             this.metroDateTime2.Size = new System.Drawing.Size(141, 29);
@@ -228,7 +229,7 @@
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label15.ForeColor = System.Drawing.Color.Honeydew;
-            this.label15.Location = new System.Drawing.Point(319, 281);
+            this.label15.Location = new System.Drawing.Point(319, 268);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(0, 24);
             this.label15.TabIndex = 16;
@@ -237,7 +238,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Arial", 15.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label16.Location = new System.Drawing.Point(8, 281);
+            this.label16.Location = new System.Drawing.Point(8, 264);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(313, 24);
             this.label16.TabIndex = 17;
@@ -286,9 +287,9 @@
             this.label18.ForeColor = System.Drawing.Color.Honeydew;
             this.label18.Location = new System.Drawing.Point(12, 339);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(27, 25);
+            this.label18.Size = new System.Drawing.Size(24, 25);
             this.label18.TabIndex = 29;
-            this.label18.Text = "lll";
+            this.label18.Text = "0";
             // 
             // label19
             // 
@@ -349,7 +350,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label23.Location = new System.Drawing.Point(33, 209);
+            this.label23.Location = new System.Drawing.Point(33, 196);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(102, 19);
             this.label23.TabIndex = 34;
@@ -359,7 +360,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label24.Location = new System.Drawing.Point(223, 209);
+            this.label24.Location = new System.Drawing.Point(223, 196);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(145, 19);
             this.label24.TabIndex = 35;
@@ -368,7 +369,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Black;
-            this.panel2.Location = new System.Drawing.Point(0, 308);
+            this.panel2.Location = new System.Drawing.Point(0, 293);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(399, 1);
             this.panel2.TabIndex = 36;
@@ -383,12 +384,23 @@
             this.label25.TabIndex = 37;
             this.label25.Text = "%";
             // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.BackColor = System.Drawing.Color.Transparent;
+            this.label26.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label26.Location = new System.Drawing.Point(9, 294);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(0, 16);
+            this.label26.TabIndex = 38;
+            // 
             // ORDER_PAGE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(400, 522);
+            this.Controls.Add(this.label26);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label24);
@@ -463,5 +475,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
     }
 }

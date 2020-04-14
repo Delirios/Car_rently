@@ -140,11 +140,19 @@ namespace Car_rently
         #region ВИВІД ФОТО В PICTUREBOX
         private void button4_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.ShowDialog();
-            pictureBox2.Image = Image.FromFile(openFileDialog.FileName);
-            ReadImageToBytes(openFileDialog.FileName);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            try
+            {
+
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.ShowDialog();
+                pictureBox2.Image = Image.FromFile(openFileDialog.FileName);
+                ReadImageToBytes(openFileDialog.FileName);
+                pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            catch
+            {
+                MessageBox.Show("Невірний формат зображення!");
+            }
 
         }
         #endregion
@@ -217,6 +225,7 @@ namespace Car_rently
                 metroTextBox2.Clear();
                 metroTextBox3.Clear();
                 metroTextBox4.Clear();
+                pictureBox2.Image = null;
 
             }
 

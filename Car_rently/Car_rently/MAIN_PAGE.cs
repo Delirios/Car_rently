@@ -218,30 +218,49 @@ namespace Car_rently
 
         private void button3_Click(object sender, EventArgs e)
         {
+
             ORDER_PAGE order_page = new ORDER_PAGE();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                textBox5.Clear();
-                connection.Open();
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT First_name, Last_name, Patronymic FROM client WHERE E_mail = '" + label7.Text + "'";
-                SqlDataReader thisReader = command.ExecuteReader();
-                while (thisReader.Read())
-                {
-                    order_page.First_name = thisReader["First_name"].ToString();
-                    order_page.Last_name = thisReader["Last_name"].ToString();
-                    order_page.Patronymic = thisReader["Patronymic"].ToString();
-                    
-                }
-                
-                order_page.Brand = metroComboBox1.Text;
-                order_page.Model = textBox1.Text;
-                order_page.Price = textBox4.Text;
-                order_page.E_mail = label7.Text;
-                order_page.Id_car = Convert.ToInt32( textBox6.Text);
+                connection.Open();
+                command.CommandText = "select Id_client from client where E_mail = '" + label7.Text + "'";
+                int id_client =Convert.ToInt32( command.ExecuteScalar());
 
-                order_page.Show();
+
+
+                command.CommandText = "SELECT count(*) FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE Id_client = '" + id_client + "' AND rent_penalty.Id_rent Is NULL ";
+                int count = Convert.ToInt32(command.ExecuteScalar());
+                if (count == 0)
+                {
+
+
+
+                    textBox5.Clear();
+                    command.CommandText = "SELECT First_name, Last_name, Patronymic FROM client WHERE E_mail = '" + label7.Text + "'";
+                    SqlDataReader thisReader = command.ExecuteReader();
+                    while (thisReader.Read())
+                    {
+                        order_page.First_name = thisReader["First_name"].ToString();
+                        order_page.Last_name = thisReader["Last_name"].ToString();
+                        order_page.Patronymic = thisReader["Patronymic"].ToString();
+
+                    }
+
+                    order_page.Brand = metroComboBox1.Text;
+                    order_page.Model = textBox1.Text;
+                    order_page.Price = textBox4.Text;
+                    order_page.E_mail = label7.Text;
+                    order_page.Id_car = Convert.ToInt32(textBox6.Text);
+
+                    order_page.Show();
+                }
+                else
+                {
+                    MessageBox.Show("У вас є незавершене замовлення!" +
+                        "Щоб оформити нове замовлення, закрийте попереднє!");
+                }
 
             }
         }

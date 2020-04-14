@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,12 +26,22 @@ namespace Car_rently
             get { return id_client; }
             set { id_client = value; }
         }
-
+        byte[] salt; 
 
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
         private void button2_Click(object sender, EventArgs e)
         {
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(textBox3.Text, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -55,7 +66,7 @@ namespace Car_rently
                     }
                     if (textBox3.Text != "")
                     {
-                        command.CommandText = "UPDATE client  SET Password = '" + textBox3.Text + "' WHERE Id_client = '" + id_client + "';";
+                        command.CommandText = "UPDATE client  SET Password = '"+ savedPasswordHash + "' WHERE Id_client = '" + id_client + "';";
                         command.ExecuteNonQuery();
                         MessageBox.Show("Збережено!");
                     }
@@ -140,6 +151,7 @@ namespace Car_rently
             }
 
             string sql = "SELECT DISTINCT brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE Id_client = '"+ id_client + "' AND rent_penalty.Id_rent IS not NULL ";
+            //string sql = "select * from rent_history where Id_client = '" + id_client + "' AND Id_rent IS not NULL ";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);

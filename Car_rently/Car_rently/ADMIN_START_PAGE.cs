@@ -51,16 +51,16 @@ namespace Car_rently
         private void button1_Click(object sender, EventArgs e)
         {
             
-            if (textBox1.Text == "1" && textBox2.Text == "1") //"если" в поле1 значение "user" и если в поле2 значение "pass" P.S user - логин ; pass - пароль!!!
+            if (textBox1.Text == "1" && textBox2.Text == "1") 
             {
                 ADMIN_PAGE admin_page = new ADMIN_PAGE();
                 admin_page.Show();
                 this.Close();
 
             }
-            else //иначе
+            else 
             {
-                MessageBox.Show("Неверный пароль или логин", "Ошибка"); //вылазит ошибка о неверном пароле!
+                MessageBox.Show("Неверный пароль или логин", "Ошибка"); 
             }
         }
     }

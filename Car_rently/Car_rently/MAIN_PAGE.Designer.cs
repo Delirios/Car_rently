@@ -192,7 +192,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(9, 112);
+            this.textBox6.Location = new System.Drawing.Point(58, 473);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(100, 20);
