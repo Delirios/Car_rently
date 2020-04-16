@@ -21,44 +21,55 @@ namespace Car_rently
         }
 
 
-        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+        static string commandstring = "SELECT * FROM type_of_car;" +
+            "SELECT * from penalties; " +
+            "SELECT Id_car, type_name,brand_name,car_model, year, cost,price, picture FROM cars JOIN type_of_car ON cars.Id_type = type_of_car.Id_type JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand;" +
+            "SELECT * FROM discounts;" +
+            "SELECT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NULL;" +
+            "SELECT * FROM client; " +
+            "SELECT DISTINCT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NOT NULL";
+
+        static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public byte[] data = null;
+
+        SqlDataAdapter adapter = new SqlDataAdapter(commandstring, connectionString); //створюємо екземпляр класу адаптер
+        DataSet dataset = new DataSet(); // створюємо датасет(копія бази даних)
 
         private void label12_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        #region ЗАПОВНЕННЯ КОМБОБОКСІВ
+        #region ЗАПОВНЕННЯ КОМБОБОКСІВ І ТАБЛИЦЬ
         private void ADMIN_PAGE_Load(object sender, EventArgs e)
         {
-            string sql = "SELECT * FROM car_rently.dbo.type_of_car";
+            
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand cmd1 = new SqlCommand(sql, connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                metroComboBox1.DataSource = tbl1;
-                metroComboBox1.DisplayMember = "type_name";// столбец для отображения
-                metroComboBox1.ValueMember = "Id_type";//столбец с id
+                connection.Open();
+                adapter.Fill(dataset);
+                metroComboBox1.DataSource = dataset.Tables[0];
+                metroComboBox1.DisplayMember = "type_name";// колонка для відображення
+                metroComboBox1.ValueMember = "Id_type";// колонка з Id
                 metroComboBox1.SelectedIndex = -1;
-            }
-            string sql_penalties = "SELECT * from penalties";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand cmd1 = new SqlCommand(sql_penalties, connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                checkedListBox1.DataSource = tbl1;
-                checkedListBox1.DisplayMember = "penalty_name";// столбец для отображения
-                checkedListBox1.ValueMember = "Id_penalty";//столбец с id
+
+
+                checkedListBox1.DataSource = dataset.Tables[1];
+                checkedListBox1.DisplayMember = "penalty_name";// колонка для відображення
+                checkedListBox1.ValueMember = "Id_penalty";// колонка з Id
                 //metroComboBox1.SelectedIndex = -1;
             }
             int[] array = Enumerable.Range(2000, 20).ToArray();
             metroComboBox2.DataSource = array;
             checkedListBox1.CheckOnClick = true;
+
+            dataGridView2.DataSource = dataset.Tables[1];// таблиці з запиту по індексах
+            dataGridView1.DataSource = dataset.Tables[2];
+            dataGridView3.DataSource = dataset.Tables[3];
+            dataGridView5.DataSource = dataset.Tables[4];
+            dataGridView4.DataSource = dataset.Tables[5];
+            dataGridView6.DataSource = dataset.Tables[6];
 
         }
         #endregion
@@ -96,6 +107,8 @@ namespace Car_rently
                 MessageBox.Show("Штраф додано!");
                 metroTextBox5.Clear();
                 metroTextBox6.Clear();
+                dataset.Clear();
+                adapter.Fill(dataset);
             }
 
         }
@@ -121,6 +134,8 @@ namespace Car_rently
                 MessageBox.Show("Знижку додано!");
                 metroTextBox7.Clear();
                 metroTextBox8.Clear();
+                dataset.Clear();
+                adapter.Fill(dataset);
             }
         }
         #endregion
@@ -227,114 +242,61 @@ namespace Car_rently
                 metroTextBox4.Clear();
                 pictureBox2.Image = null;
 
+                dataset.Clear();
+                adapter.Fill(dataset);
+
             }
 
         }
         #endregion
 
-        #region ВСІ СЕЛЕКТИ
         private void button5_Click(object sender, EventArgs e)
         {
-            string sql = "SELECT Id_car, type_name,brand_name,car_model, year, cost,price, picture FROM cars JOIN type_of_car ON cars.Id_type = type_of_car.Id_type JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                // Создаем объект DataAdapter
-                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
-                // Создаем объект Dataset
-                DataSet ds = new DataSet();
-                // Заполняем Dataset
-                adapter.Fill(ds);
-                // Отображаем данные
-                dataGridView1.DataSource = ds.Tables[0];
-            }
+
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            string sql = "SELECT * FROM penalties";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                // Создаем объект DataAdapter
-                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
-                // Создаем объект Dataset
-                DataSet ds = new DataSet();
-                // Заполняем Dataset
-                adapter.Fill(ds);
-                // Отображаем данные
-                dataGridView2.DataSource = ds.Tables[0];
-            }
+
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            string sql = "SELECT * FROM discounts";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                // Создаем объект DataAdapter
-                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
-                // Создаем объект Dataset
-                DataSet ds = new DataSet();
-                // Заполняем Dataset
-                adapter.Fill(ds);
-                // Отображаем данные
-                dataGridView3.DataSource = ds.Tables[0];
-            }
+           
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            string sql = "SELECT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NULL";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                // Создаем объект DataAdapter
-                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
-                // Создаем объект Dataset
-                DataSet ds = new DataSet();
-                // Заполняем Dataset
-                adapter.Fill(ds);
-                // Отображаем данные
-                dataGridView5.DataSource = ds.Tables[0];
-            }
-
+            
         }
         private void button11_Click(object sender, EventArgs e)
-        {
+        {         
 
-            string sql = "SELECT * FROM client";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                // Создаем объект DataAdapter
-                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
-                // Создаем объект Dataset
-                DataSet ds = new DataSet();
-                // Заполняем Dataset
-                adapter.Fill(ds);
-                // Отображаем данные
-                dataGridView4.DataSource = ds.Tables[0];
-            }
+        }
+        private void button16_Click(object sender, EventArgs e)
+        {
 
         }
 
-        #endregion
 
         #region ВСІ ДЕЛІТИ
         private void button8_Click(object sender, EventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand com = new SqlCommand("DELETE FROM cars WHERE id_car=@id", con);
-                int id = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
-                com.Parameters.AddWithValue("@id", id);
-                con.Open(); //Открываем подключение
                 try
                 {
-                    com.ExecuteNonQuery();
+                    connection.Open();
+                    adapter.DeleteCommand = new SqlCommand("DELETE FROM cars WHERE Id_car=@id", connection);
+                    int id = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
+                    adapter.DeleteCommand.Parameters.AddWithValue("@id", id);
+
+                    adapter.DeleteCommand.ExecuteNonQuery();
+                    dataset.Clear();
+                    adapter.Fill(dataset);
                     MessageBox.Show("Автомобіль видалено");
+
+
                 }
                 catch
                 {
@@ -345,15 +307,18 @@ namespace Car_rently
 
         private void button9_Click(object sender, EventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand com = new SqlCommand("DELETE FROM penalties WHERE id_penalty=@id", con);
-                int id = int.Parse(dataGridView2.CurrentRow.Cells[0].Value.ToString());
-                com.Parameters.AddWithValue("@id", id);
-                con.Open(); //Открываем подключение
                 try
                 {
-                    com.ExecuteNonQuery();
+                    connection.Open();
+                    adapter.DeleteCommand = new SqlCommand("DELETE FROM penalties WHERE Id_penalty=@id", connection);
+                    int id = int.Parse(dataGridView2.CurrentRow.Cells[0].Value.ToString());
+                    adapter.DeleteCommand.Parameters.AddWithValue("@id", id);
+
+                    adapter.DeleteCommand.ExecuteNonQuery();
+                    dataset.Clear();
+                    adapter.Fill(dataset);
                     MessageBox.Show("Штраф видалено");
                 }
                 catch
@@ -365,15 +330,18 @@ namespace Car_rently
 
         private void button10_Click(object sender, EventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand com = new SqlCommand("DELETE FROM discounts WHERE id_discount=@id", con);
-                int id = int.Parse(dataGridView3.CurrentRow.Cells[0].Value.ToString());
-                com.Parameters.AddWithValue("@id", id);
-                con.Open(); //Открываем подключение
                 try
                 {
-                    com.ExecuteNonQuery();
+                    connection.Open();
+                    adapter.DeleteCommand = new SqlCommand("DELETE FROM discounts WHERE Id_discount=@id", connection);
+                    int id = int.Parse(dataGridView3.CurrentRow.Cells[0].Value.ToString());
+                    adapter.DeleteCommand.Parameters.AddWithValue("@id", id);
+
+                    adapter.DeleteCommand.ExecuteNonQuery();
+                    dataset.Clear();
+                    adapter.Fill(dataset);
                     MessageBox.Show("Знижку видалено");
                 }
                 catch
@@ -386,15 +354,18 @@ namespace Car_rently
 
         private void button12_Click(object sender, EventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand com = new SqlCommand("DELETE FROM client WHERE id_client=@id", con);
-                int id = int.Parse(dataGridView4.CurrentRow.Cells[0].Value.ToString());
-                com.Parameters.AddWithValue("@id", id);
-                con.Open(); //Открываем подключение
                 try
                 {
-                    com.ExecuteNonQuery();
+                    connection.Open();
+                    adapter.DeleteCommand = new SqlCommand("DELETE FROM client WHERE id_client = @id", connection);
+                    int id = int.Parse(dataGridView4.CurrentRow.Cells[0].Value.ToString());
+                    adapter.DeleteCommand.Parameters.AddWithValue("@id", id);
+
+                    adapter.DeleteCommand.ExecuteNonQuery();
+                    dataset.Clear();
+                    adapter.Fill(dataset);
                     MessageBox.Show("Клієнта видалено");
                 }
                 catch
@@ -480,7 +451,7 @@ namespace Car_rently
                         command.Connection = connection;
 
                         string curItemString = ((DataRowView)item)[checkedListBox1.DisplayMember].ToString();
-                        // выполняем действия со строкой
+
                         command.CommandText = "(SELECT amount_penalty FROM penalties WHERE penalty_name = '" + curItemString + "')";
 
                         SqlDataReader thisReader = command.ExecuteReader();
@@ -529,7 +500,7 @@ namespace Car_rently
                     command.Connection = connection;
 
                     string curItemString = ((DataRowView)item)[checkedListBox1.DisplayMember].ToString();
-                    // выполняем действия со строкой
+
                     command.CommandText = "(SELECT Id_penalty FROM penalties WHERE penalty_name = '" + curItemString + "')";
 
                     SqlDataReader thisReader = command.ExecuteReader();
@@ -597,7 +568,8 @@ namespace Car_rently
 
                 }
             }
-
+            dataset.Clear();
+            adapter.Fill(dataset);
             MessageBox.Show("Замовлення закрито!");
             ADMIN_PAGE admin = new ADMIN_PAGE();
             this.Close();
@@ -606,22 +578,7 @@ namespace Car_rently
 
         }
 
-        private void button16_Click(object sender, EventArgs e)
-        {
-            string sql = "SELECT DISTINCT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NOT NULL";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                // Создаем объект DataAdapter
-                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
-                // Создаем объект Dataset
-                DataSet ds = new DataSet();
-                // Заполняем Dataset
-                adapter.Fill(ds);
-                // Отображаем данные
-                dataGridView6.DataSource = ds.Tables[0];
-            }
-        }
+
 
         private void metroTextBox9_Click(object sender, EventArgs e)
         {

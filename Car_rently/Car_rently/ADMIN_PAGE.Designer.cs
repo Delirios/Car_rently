@@ -86,7 +86,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.metroTabPage3 = new MetroFramework.Controls.MetroTabPage();
             this.button8 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.metroTabPage4 = new MetroFramework.Controls.MetroTabPage();
             this.label14 = new System.Windows.Forms.Label();
@@ -108,6 +107,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage6.SuspendLayout();
@@ -145,18 +145,18 @@
             // 
             // metroTabControl1
             // 
-            this.metroTabControl1.Controls.Add(this.metroTabPage7);
+            this.metroTabControl1.Controls.Add(this.metroTabPage3);
             this.metroTabControl1.Controls.Add(this.metroTabPage6);
+            this.metroTabControl1.Controls.Add(this.metroTabPage7);
             this.metroTabControl1.Controls.Add(this.metroTabPage1);
             this.metroTabControl1.Controls.Add(this.metroTabPage2);
-            this.metroTabControl1.Controls.Add(this.metroTabPage3);
             this.metroTabControl1.Controls.Add(this.metroTabPage4);
             this.metroTabControl1.Controls.Add(this.metroTabPage5);
             this.metroTabControl1.Controls.Add(this.metroTabPage8);
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.metroTabControl1.Location = new System.Drawing.Point(0, 137);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 1;
+            this.metroTabControl1.SelectedIndex = 7;
             this.metroTabControl1.Size = new System.Drawing.Size(887, 393);
             this.metroTabControl1.TabIndex = 1;
             this.metroTabControl1.UseSelectable = true;
@@ -183,11 +183,11 @@
             this.button13.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button13.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button13.Location = new System.Drawing.Point(671, 320);
+            this.button13.Location = new System.Drawing.Point(665, 320);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(198, 31);
+            this.button13.Size = new System.Drawing.Size(204, 31);
             this.button13.TabIndex = 5;
-            this.button13.Text = "Показати замовлення";
+            this.button13.Text = "Редагувати замовлення";
             this.button13.UseVisualStyleBackColor = false;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
@@ -447,9 +447,9 @@
             // 
             // 
             this.metroTextBox9.CustomButton.Image = null;
-            this.metroTextBox9.CustomButton.Location = new System.Drawing.Point(196, 1);
+            this.metroTextBox9.CustomButton.Location = new System.Drawing.Point(206, 1);
             this.metroTextBox9.CustomButton.Name = "";
-            this.metroTextBox9.CustomButton.Size = new System.Drawing.Size(31, 31);
+            this.metroTextBox9.CustomButton.Size = new System.Drawing.Size(21, 21);
             this.metroTextBox9.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
             this.metroTextBox9.CustomButton.TabIndex = 1;
             this.metroTextBox9.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
@@ -1009,8 +1009,8 @@
             // 
             // metroTabPage3
             // 
-            this.metroTabPage3.Controls.Add(this.button8);
             this.metroTabPage3.Controls.Add(this.button5);
+            this.metroTabPage3.Controls.Add(this.button8);
             this.metroTabPage3.Controls.Add(this.dataGridView1);
             this.metroTabPage3.HorizontalScrollbarBarColor = true;
             this.metroTabPage3.HorizontalScrollbarHighlightOnWheel = false;
@@ -1037,20 +1037,6 @@
             this.button8.Text = "Видалити авто";
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(184)))), ((int)(((byte)(206)))));
-            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(708, 320);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(161, 31);
-            this.button5.TabIndex = 3;
-            this.button5.Text = "Авто в БД";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // dataGridView1
             // 
@@ -1143,11 +1129,11 @@
             this.button7.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button7.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button7.Location = new System.Drawing.Point(708, 320);
+            this.button7.Location = new System.Drawing.Point(700, 320);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(161, 31);
+            this.button7.Size = new System.Drawing.Size(169, 31);
             this.button7.TabIndex = 5;
-            this.button7.Text = "Знижки в БД";
+            this.button7.Text = "Редагувати знижку";
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
@@ -1157,11 +1143,11 @@
             this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button6.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(257, 320);
+            this.button6.Location = new System.Drawing.Point(245, 320);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(161, 31);
+            this.button6.Size = new System.Drawing.Size(173, 31);
             this.button6.TabIndex = 4;
-            this.button6.Text = "Штрафи в БД";
+            this.button6.Text = "Редагувати штраф";
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -1228,11 +1214,11 @@
             this.button11.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button11.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button11.Location = new System.Drawing.Point(708, 320);
+            this.button11.Location = new System.Drawing.Point(685, 320);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(161, 31);
+            this.button11.Size = new System.Drawing.Size(184, 31);
             this.button11.TabIndex = 4;
-            this.button11.Text = "Клієнти в БД";
+            this.button11.Text = "Редагувати клієнта";
             this.button11.UseVisualStyleBackColor = false;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
@@ -1275,7 +1261,7 @@
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(246, 31);
             this.button16.TabIndex = 6;
-            this.button16.Text = "Показати історію замовлень";
+            this.button16.Text = "Змінити історію замовлень";
             this.button16.UseVisualStyleBackColor = false;
             this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
@@ -1338,6 +1324,19 @@
             this.pictureBox1.Size = new System.Drawing.Size(70, 69);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(78)))), ((int)(((byte)(184)))), ((int)(((byte)(206)))));
+            this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button5.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button5.Location = new System.Drawing.Point(708, 320);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(161, 31);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "Редагувати авто";
+            this.button5.UseVisualStyleBackColor = false;
             // 
             // ADMIN_PAGE
             // 
@@ -1421,7 +1420,6 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private MetroFramework.Controls.MetroTabPage metroTabPage3;
         private MetroFramework.Controls.MetroPanel metroPanel1;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.DataGridView dataGridView1;
         private MetroFramework.Controls.MetroTabPage metroTabPage4;
         private System.Windows.Forms.Button button7;
@@ -1465,5 +1463,6 @@
         private MetroFramework.Controls.MetroTabPage metroTabPage8;
         private System.Windows.Forms.Button button16;
         private System.Windows.Forms.DataGridView dataGridView6;
+        private System.Windows.Forms.Button button5;
     }
 }
