@@ -24,11 +24,11 @@ namespace Car_rently
 
         static string commandstring = "SELECT * FROM type_of_car;" +
             "SELECT * from penalties; " +
-            "SELECT Id_car, type_name,brand_name,car_model, year, cost,price, picture FROM cars JOIN type_of_car ON cars.Id_type = type_of_car.Id_type JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand;" +
+            "exec current_cars;" +
             "SELECT * FROM discounts;" +
-            "SELECT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NULL;" +
+            "exec current_orders;" +
             "SELECT * FROM client; " +
-            "SELECT DISTINCT rent.Id_rent, E_mail, brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN client  ON rent.Id_client = client.Id_client JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE rent_penalty.Id_rent IS NOT NULL";
+            "exec rent_history;";
 
         static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public byte[] data = null;
@@ -435,6 +435,10 @@ namespace Car_rently
             foreach (int indexChecked in checkedListBox1.CheckedIndices)
             {
                 index += indexChecked;
+                if(index == 0)
+                {
+                    index++;
+                }
             }
             if (index != 0)
             {
