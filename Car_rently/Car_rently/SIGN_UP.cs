@@ -160,12 +160,12 @@ namespace Car_rently
                     command.Connection = connection;
 
                     command.CommandText = "INSERT INTO car_rently.dbo.client (First_name,Last_name,Patronymic,E_mail,Phone,Password) VALUES (@first_name,@last_name,@patronymic,@e_mail,@phone,@password)";
-                    command.Parameters.Add("@first_name", SqlDbType.NVarChar);
-                    command.Parameters.Add("@last_name", SqlDbType.NVarChar);
-                    command.Parameters.Add("@patronymic", SqlDbType.NVarChar);
-                    command.Parameters.Add("@e_mail", SqlDbType.NVarChar);
-                    command.Parameters.Add("@phone", SqlDbType.Int);
-                    command.Parameters.Add("@password", SqlDbType.NVarChar);
+                    command.Parameters.Add("@first_name", SqlDbType.VarChar);
+                    command.Parameters.Add("@last_name", SqlDbType.VarChar);
+                    command.Parameters.Add("@patronymic", SqlDbType.VarChar);
+                    command.Parameters.Add("@e_mail", SqlDbType.VarChar);
+                    command.Parameters.Add("@phone", SqlDbType.VarChar);
+                    command.Parameters.Add("@password", SqlDbType.VarChar);
 
                     // передаем данные в команду через параметры
                     command.Parameters["@first_name"].Value = textBox4.Text.Trim();

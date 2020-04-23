@@ -184,7 +184,7 @@ namespace Car_rently
         
         private void metroDateTime1_ValueChanged(object sender, EventArgs e)
         {
-            metroDateTime1.MinDate = DateTime.Now;
+            metroDateTime1.MinDate = DateTime.Today;
             DateTime dateTime = metroDateTime1.Value;
             metroDateTime2.MinDate = dateTime;
 

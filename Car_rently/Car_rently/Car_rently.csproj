@@ -82,6 +82,12 @@
     <Compile Include="MAIN_PAGE.Designer.cs">
       <DependentUpon>MAIN_PAGE.cs</DependentUpon>
     </Compile>
+    <Compile Include="CHANGE_CURRENT_ORDER_.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CHANGE_CURRENT_ORDER_.Designer.cs">
+      <DependentUpon>CHANGE_CURRENT_ORDER_.cs</DependentUpon>
+    </Compile>
     <Compile Include="ORDER_PAGE.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MAIN_PAGE.resx">
       <DependentUpon>MAIN_PAGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CHANGE_CURRENT_ORDER_.resx">
+      <DependentUpon>CHANGE_CURRENT_ORDER_.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ORDER_PAGE.resx">
       <DependentUpon>ORDER_PAGE.cs</DependentUpon>

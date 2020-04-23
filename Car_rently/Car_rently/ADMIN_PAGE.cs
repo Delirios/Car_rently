@@ -20,11 +20,12 @@ namespace Car_rently
             InitializeComponent();
         }
 
-
+       
 
         static string commandstring = "SELECT * FROM type_of_car;" +
             "SELECT * from penalties; " +
-            "exec current_cars;" +
+            "select * from available_cars_view;" +
+            "select * from unavailable_cars_view;" +
             "SELECT * FROM discounts;" +
             "exec current_orders;" +
             "SELECT * FROM client; " +
@@ -64,12 +65,18 @@ namespace Car_rently
             metroComboBox2.DataSource = array;
             checkedListBox1.CheckOnClick = true;
 
-            dataGridView2.DataSource = dataset.Tables[1];// таблиці з запиту по індексах
+            DataTable data = new DataTable();
+            data = dataset.Tables[1];
+
+
+            data.PrimaryKey = new DataColumn[] { data.Columns["Id_penalty"] };
+            dataGridView2.DataSource = data;// таблиці з запиту по індексах
             dataGridView1.DataSource = dataset.Tables[2];
-            dataGridView3.DataSource = dataset.Tables[3];
-            dataGridView5.DataSource = dataset.Tables[4];
-            dataGridView4.DataSource = dataset.Tables[5];
-            dataGridView6.DataSource = dataset.Tables[6];
+            dataGridView7.DataSource = dataset.Tables[3];
+            dataGridView3.DataSource = dataset.Tables[4];
+            dataGridView5.DataSource = dataset.Tables[5];
+            dataGridView4.DataSource = dataset.Tables[6];
+            dataGridView6.DataSource = dataset.Tables[7];
 
         }
         #endregion
@@ -219,7 +226,7 @@ namespace Car_rently
 
                 command.Parameters.Add("@type", SqlDbType.Int);
                 command.Parameters.Add("@brand", SqlDbType.Int);
-                command.Parameters.Add("@model", SqlDbType.NVarChar, 20);
+                command.Parameters.Add("@model", SqlDbType.VarChar, 20);
                 command.Parameters.Add("@year", SqlDbType.Int);
                 command.Parameters.Add("@cost", SqlDbType.Int);
                 command.Parameters.Add("@price", SqlDbType.Int);
@@ -249,34 +256,6 @@ namespace Car_rently
 
         }
         #endregion
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-           
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            
-        }
-        private void button11_Click(object sender, EventArgs e)
-        {         
-
-        }
-        private void button16_Click(object sender, EventArgs e)
-        {
-
-        }
 
 
         #region ВСІ ДЕЛІТИ
@@ -582,11 +561,121 @@ namespace Car_rently
 
         }
 
-
-
         private void metroTextBox9_Click(object sender, EventArgs e)
         {
             metroTextBox9.Clear();
+        }
+
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string sqlExpression = "update_penalties";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sqlExpression, connection);
+                // Вказуємо, що команда звертається до процедури
+                command.CommandType = CommandType.StoredProcedure;
+                int id = Convert.ToInt32(dataGridView2.CurrentRow.Cells[0].Value);
+                string penalty_name = dataGridView2.CurrentRow.Cells[1].Value.ToString();
+                int amount_penalty = Convert.ToInt32(dataGridView2.CurrentRow.Cells[2].Value);
+                command.Parameters.AddWithValue("@Id_penalty", id);
+                command.Parameters.AddWithValue("@penalty_name", penalty_name);
+                command.Parameters.AddWithValue("@amount_penalty", amount_penalty);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Данні змінено!");
+            }
+                           
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            string sqlExpression = "update_discounts";
+
+            if (Convert.ToInt32(dataGridView3.CurrentRow.Cells[2].Value) < 100)
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(sqlExpression, connection);
+                    // Вказуємо, що команда звертається до процедури
+                    command.CommandType = CommandType.StoredProcedure;
+                    int id = Convert.ToInt32(dataGridView3.CurrentRow.Cells[0].Value);
+                    string discount_name = dataGridView3.CurrentRow.Cells[1].Value.ToString();
+                    int discount_percent = Convert.ToInt32(dataGridView3.CurrentRow.Cells[2].Value);
+                    command.Parameters.AddWithValue("@Id_discount", id);
+                    command.Parameters.AddWithValue("@discount_name", discount_name);
+                    command.Parameters.AddWithValue("@discount_percent", discount_percent);
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Данні змінено!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Відсоток не може бути 100 і більше!");
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            string sqlExpression = "update_client";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sqlExpression, connection);
+                // Вказуємо, що команда звертається до процедури
+                command.CommandType = CommandType.StoredProcedure;
+                int id = Convert.ToInt32(dataGridView4.CurrentRow.Cells[0].Value);
+                string First_name = dataGridView4.CurrentRow.Cells[1].Value.ToString();
+                string Last_name = dataGridView4.CurrentRow.Cells[2].Value.ToString();
+                string Patronymic = dataGridView4.CurrentRow.Cells[3].Value.ToString();
+                string E_mail = dataGridView4.CurrentRow.Cells[4].Value.ToString();
+                string Phone = dataGridView4.CurrentRow.Cells[5].Value.ToString();
+
+                command.Parameters.AddWithValue("@Id_client", id);
+                command.Parameters.AddWithValue("@First_name", First_name);
+                command.Parameters.AddWithValue("@Last_name", Last_name);
+                command.Parameters.AddWithValue("@Patronymic", Patronymic);
+                command.Parameters.AddWithValue("@E_mail", E_mail);
+                command.Parameters.AddWithValue("@Phone", Phone);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Данні змінено!");
+            }
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+
+            CHANGE_CURRENT_ORDER change_current_order = new CHANGE_CURRENT_ORDER();
+            change_current_order.Id_rent = Convert.ToInt32(dataGridView5.CurrentRow.Cells[0].Value);
+
+
+            change_current_order.Show();
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            string sqlExpression = "update_cars";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                SqlCommand command = new SqlCommand(sqlExpression, connection);
+                // Вказуємо, що команда звертається до процедури
+                command.CommandType = CommandType.StoredProcedure;
+                int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
+                int cost = Convert.ToInt32(dataGridView1.CurrentRow.Cells[5].Value);
+                int price = Convert.ToInt32(dataGridView1.CurrentRow.Cells[6].Value);
+
+                command.Parameters.AddWithValue("@Id_car", id);
+                command.Parameters.AddWithValue("@cost", cost);
+                command.Parameters.AddWithValue("@price", price);
+                command.ExecuteNonQuery();
+                MessageBox.Show("Данні змінено!");
+            }
         }
     }
 }

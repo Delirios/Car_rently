@@ -23,15 +23,20 @@ namespace Car_rently
             set { label7.Text = value; }
         }
 
+        List<string> list = new List<string>();
+        int id_client = 0;
+        int count = 0;
+        static string commandstring = "select distinct brand_name from available_cars_view; ";
+        static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        SqlDataAdapter adapter = new SqlDataAdapter(commandstring, connectionString); //створюємо екземпляр класу адаптер
+        DataSet dataset = new DataSet(); // створюємо датасет(копія бази даних)
+
+
         public MAIN_PAGE()
         {
             InitializeComponent();
         }
 
-
-
-        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        
         #region ПЕРЕТЯГУВАННЯ ФОРМИ
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -40,37 +45,39 @@ namespace Car_rently
                 (sender as Control).Capture = false;//picturebox не ловит событие
                 Message m = Message.Create(this.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
                 this.DefWndProc(ref m);
-                
             }
-
         }
         #endregion
 
-
-
+        #region КНОПКА ЗАКРИТТЯ ПРОГРАМИ
         private void label1_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        List<string> list = new List<string>();
-        //int count = -1;
+        #endregion
+
+        #region МЕТОД LOAD
         private void MAIN_PAGE_Load(object sender, EventArgs e)
         {
-            string sql = "SELECT TOP(1) WITH TIES * FROM cars_brand ORDER BY ROW_NUMBER()OVER(PARTITION BY brand_name ORDER BY Id_brand); ";
+            string E_mail = label7.Text;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand cmd1 = new SqlCommand(sql, connection);
-                DataTable tbl1 = new DataTable();
-                SqlDataAdapter da = new SqlDataAdapter(cmd1);
-                da.Fill(tbl1);
-                metroComboBox1.DataSource = tbl1;
-                metroComboBox1.DisplayMember = "brand_name";// столбец для отображения
-                metroComboBox1.ValueMember = "Id_brand";//столбец с id
-                //metroComboBox1.SelectedIndex = -1;
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                connection.Open();
+                adapter.Fill(dataset);
+                metroComboBox1.DataSource = dataset.Tables[0];
+                metroComboBox1.DisplayMember = "brand_name";// стовпець для відображення
+                                                            
+                command.CommandText = "select Id_client from client where E_mail = @E_mail";
+                command.Parameters.AddWithValue("@E_mail", E_mail);
+                id_client = Convert.ToInt32(command.ExecuteScalar());
             }
             
         }
-        int count = 0;
+        #endregion
+
+        #region КНОПКА НАСТУПНЕ АВТО
         private void button2_Click(object sender, EventArgs e)
         {
             int[] arr = textBox5.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => int.Parse(k.Trim())).ToArray();
@@ -117,6 +124,9 @@ namespace Car_rently
 
 
         }
+        #endregion
+
+        #region КНОПКА ПОПЕРЕДНЄ АВТО
         private void button1_Click(object sender, EventArgs e)
         {
             int[] arr = textBox5.Text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => int.Parse(k.Trim())).ToArray();
@@ -161,35 +171,40 @@ namespace Car_rently
 
 
         }
+        #endregion
 
-        public Image ByteArrayToImage(byte[] inputArray)
+        #region КНОПКА ВИЙТИ З АКАУНТУ
+        private void button4_Click(object sender, EventArgs e)
         {
-            var memoryStream = new MemoryStream(inputArray);
-            return Image.FromStream(memoryStream);
+            Form start_page = Application.OpenForms[0];
+            start_page.Show();
+            this.Close();
         }
+        #endregion
 
+        #region КНОПКА ОСОБИСТИЙ КАБІНЕТ
+        private void button5_Click(object sender, EventArgs e)
+        {
+            PERSONAL_OFFICE personal_office = new PERSONAL_OFFICE();
+            personal_office.Id_client = id_client;
+            personal_office.Closed += (s, a) => this.Show();
+            this.Hide();
+            personal_office.ShowDialog();
+
+        }
+        #endregion
+
+        #region ВИВІД ДАННИХ ПРИ ВИБОРІ З КОМБОБОКСУ
         private void metroComboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {/*/
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-
-                connection.Open();
-                string sql1 = "SELECT car_model FROM cars JOIN cars_brand cb ON cars.Id_brand = cb.Id_brand WHERE cb.brand_name =  '" + metroComboBox1.Text + "'";
-                SqlCommand command = new SqlCommand(sql1, connection);
-                SqlDataReader dataReader = command.ExecuteReader();
-                while (dataReader.Read())
-                {
-                    list.Add(dataReader.GetString(0));
-                }
-            }
-            /*/
+        {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 textBox5.Clear();
                 connection.Open();
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM cars JOIN cars_brand cb ON cars.Id_brand = cb.Id_brand WHERE cb.brand_name =  '" + metroComboBox1.Text + "'";
+                command.CommandText = "SELECT * FROM cars JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand WHERE cars_brand.brand_name =  @brand_name";
+                command.Parameters.AddWithValue("@brand_name", metroComboBox1.Text);
                 SqlDataReader thisReader = command.ExecuteReader();
                 while (thisReader.Read())
                 {
@@ -215,7 +230,9 @@ namespace Car_rently
             }
 
         }
+        #endregion
 
+        #region ЗАВАНТАЖЕННЯ ДАНИХ НА СТОРІНКУ ЗАМОВЛЕННЯ
         private void button3_Click(object sender, EventArgs e)
         {
 
@@ -225,29 +242,23 @@ namespace Car_rently
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
                 connection.Open();
-                command.CommandText = "select Id_client from client where E_mail = '" + label7.Text + "'";
-                int id_client =Convert.ToInt32( command.ExecuteScalar());
+               
 
-
-
-                command.CommandText = "SELECT count(*) FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE Id_client = '" + id_client + "' AND rent_penalty.Id_rent Is NULL ";
+                command.CommandText = "SELECT count(*) FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE Id_client = @Id_client AND rent_penalty.Id_rent Is NULL ";
+                command.Parameters.AddWithValue("@Id_client", id_client);
                 int count = Convert.ToInt32(command.ExecuteScalar());
                 if (count == 0)
                 {
-
-
-
                     textBox5.Clear();
-                    command.CommandText = "SELECT First_name, Last_name, Patronymic FROM client WHERE E_mail = '" + label7.Text + "'";
+                    command.CommandText = "SELECT First_name, Last_name, Patronymic FROM client WHERE E_mail = @E_mail";
+                    command.Parameters.AddWithValue("@E_mail", E_mail);
                     SqlDataReader thisReader = command.ExecuteReader();
                     while (thisReader.Read())
                     {
                         order_page.First_name = thisReader["First_name"].ToString();
                         order_page.Last_name = thisReader["Last_name"].ToString();
                         order_page.Patronymic = thisReader["Patronymic"].ToString();
-
                     }
-
                     order_page.Brand = metroComboBox1.Text;
                     order_page.Model = textBox1.Text;
                     order_page.Price = textBox4.Text;
@@ -258,44 +269,11 @@ namespace Car_rently
                 }
                 else
                 {
-                    MessageBox.Show("У вас є незавершене замовлення!" +
-                        "Щоб оформити нове замовлення, закрийте попереднє!");
-                }
-
-            }
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Form start_page = Application.OpenForms[0];
-            start_page.Show();
-            this.Close();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            int id_client = 0;
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand();
-                    command.Connection = connection;
-                    command.CommandText = "(SELECT Id_client FROM client WHERE E_mail = '" + label7.Text + "')";
-                    id_client = Convert.ToInt32(command.ExecuteScalar());
+                    MessageBox.Show("У вас є незавершене замовлення!  Щоб оформити нове замовлення, закрийте попереднє!");
                 }
             }
-            catch { }
-
-
-
-            PERSONAL_OFFICE personal_office = new PERSONAL_OFFICE();
-            personal_office.Id_client = id_client;
-            personal_office.Closed += (s, a) => this.Show();
-            this.Hide();
-            personal_office.ShowDialog();
-
         }
+        #endregion
+
     }
 }

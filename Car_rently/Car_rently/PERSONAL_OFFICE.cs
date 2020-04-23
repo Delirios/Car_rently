@@ -26,85 +26,20 @@ namespace Car_rently
             get { return id_client; }
             set { id_client = value; }
         }
-        byte[] salt; 
 
-        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        byte[] salt;
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
-            var pbkdf2 = new Rfc2898DeriveBytes(textBox3.Text, salt, 10000);
-            byte[] hash = pbkdf2.GetBytes(20);
-            byte[] hashBytes = new byte[36];
+        static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        static string commandstring = "SELECT DISTINCT brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE Id_client = @id AND rent_penalty.Id_rent IS not NULL ; ";
+        SqlDataAdapter adapter = new SqlDataAdapter(commandstring, connectionString); //створюємо екземпляр класу адаптер
+        DataSet dataset = new DataSet(); // створюємо датасет(копія бази даних)
 
-            Array.Copy(salt, 0, hashBytes, 0, 16);
-            Array.Copy(hash, 0, hashBytes, 16, 20);
-
-            string savedPasswordHash = Convert.ToBase64String(hashBytes);
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand();
-                command.Connection = connection;
-                try
-                {
-                    if (textBox1.Text != "")
-                    {
-                        command.CommandText = "UPDATE client  SET E_mail = '" + textBox1.Text + "' WHERE Id_client = '" + id_client + "';";
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Пошту змінено. Перезайдіть в аккаунт");
-                        this.Hide();
-                        START_PAGE start_page = new START_PAGE();
-                        start_page.ShowDialog();
-                    }
-                    if (textBox2.Text != "")
-                    {
-                        command.CommandText = "UPDATE client  SET Phone = '" + Convert.ToInt32(textBox2.Text) + "' WHERE Id_client = '" + id_client + "';";
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Збережено!");
-                    }
-                    if (textBox3.Text != "")
-                    {
-                        command.CommandText = "UPDATE client  SET Password = '"+ savedPasswordHash + "' WHERE Id_client = '" + id_client + "';";
-                        command.ExecuteNonQuery();
-                        MessageBox.Show("Збережено!");
-                    }
-
-                }
-                catch
-                {
-                    MessageBox.Show("sdsd");
-                }
-
-
-            }
-        }
-
-
-
-        #region ПЕРЕТЯГУВАННЯ ФОРМИ
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
-            {
-                (sender as Control).Capture = false;//picturebox не ловит событие
-                Message m = Message.Create(this.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
-                this.DefWndProc(ref m);
-
-            }
-
-        }
-        #endregion
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-            this.Close();
-            
-        }
 
         private void PERSONAL_OFFICE_Load(object sender, EventArgs e)
         {
+            adapter.SelectCommand.Parameters.AddWithValue("@id", id_client);
+            adapter.Fill(dataset);
+            metroGrid1.DataSource = dataset.Tables[0];
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -149,19 +84,81 @@ namespace Car_rently
                 catch { MessageBox.Show("eror"); }
 
             }
+        }
 
-            string sql = "SELECT DISTINCT brand_name, car_model,lease_date, return_date, rental_days, total_amount FROM cars JOIN rent ON cars.Id_car = rent.Id_car JOIN cars_brand  ON cars.Id_brand = cars_brand.Id_brand lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent WHERE Id_client = '"+ id_client + "' AND rent_penalty.Id_rent IS not NULL ";
-            //string sql = "select * from rent_history where Id_client = '" + id_client + "' AND Id_rent IS not NULL ";
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            var pbkdf2 = new Rfc2898DeriveBytes(textBox3.Text, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            byte[] hashBytes = new byte[36];
+
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlDataAdapter adapter = new SqlDataAdapter(sql, connection);
-                // Создаем объект Dataset
-                DataSet ds = new DataSet();
-                // Заполняем Dataset
-                adapter.Fill(ds);
-                // Отображаем данные
-                metroGrid1.DataSource = ds.Tables[0];
+                connection.Open();
+                SqlCommand command = new SqlCommand();
+                command.Connection = connection;
+                try
+                {
+                    if (textBox1.Text != "")
+                    {
+                        command.CommandText = "UPDATE client  SET E_mail = '" + textBox1.Text + "' WHERE Id_client = '" + id_client + "';";
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Пошту змінено. Перезайдіть в аккаунт");
+                        this.Hide();
+                        START_PAGE start_page = new START_PAGE();
+                        start_page.ShowDialog();
+                    }
+                    if (textBox2.Text != "")
+                    {
+                        command.CommandText = "UPDATE client  SET Phone = '" + Convert.ToInt32(textBox2.Text) + "' WHERE Id_client = '" + id_client + "';";
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Збережено!");
+                    }
+                    if (textBox3.Text != "")
+                    {
+                        command.CommandText = "UPDATE client  SET Password = '" + savedPasswordHash + "' WHERE Id_client = '" + id_client + "';";
+                        command.ExecuteNonQuery();
+                        MessageBox.Show("Збережено!");
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("Не заповненно жодного поля!");
+                }
+
+
             }
         }
+
+
+
+        #region ПЕРЕТЯГУВАННЯ ФОРМИ
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                (sender as Control).Capture = false;//picturebox не ловит событие
+                Message m = Message.Create(this.Handle, 0xa1, new IntPtr(2), IntPtr.Zero);
+                this.DefWndProc(ref m);
+
+            }
+
+        }
+        #endregion
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+        }
+
     }
+
 }

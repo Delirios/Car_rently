@@ -84,38 +84,45 @@ namespace Car_rently
 
                 SqlDataAdapter sda = new SqlDataAdapter(sql,connection);
                 DataTable dtbl = new DataTable();
-
                 sda.Fill(dtbl);
-                string savedPasswordHash = dtbl.Rows[0][6].ToString();
-                byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
-                byte[] salt = new byte[16];
-                Array.Copy(hashBytes, 0, salt, 0, 16);
-
-                var pbkdf2 = new Rfc2898DeriveBytes(textBox2.Text, salt, 10000);
-
-                byte[] hash = pbkdf2.GetBytes(20);
-
-                int ok = 1;
-                for (int i = 0; i < 20; i++)
-                    if (hashBytes[i + 16] != hash[i])
-                        ok = 0;
-
-
-
-                if (ok == 1 )
+                try
                 {
-                    main_page.E_mail = textBox3.Text;
-                    this.Hide();
-                    textBox3.Clear();
-                    textBox2.Clear();
-                    main_page.ShowDialog();
+                    string savedPasswordHash = dtbl.Rows[0][6].ToString();
+                    byte[] hashBytes = Convert.FromBase64String(savedPasswordHash);
+                    byte[] salt = new byte[16];
+                    Array.Copy(hashBytes, 0, salt, 0, 16);
+
+                    var pbkdf2 = new Rfc2898DeriveBytes(textBox2.Text, salt, 10000);
+
+                    byte[] hash = pbkdf2.GetBytes(20);
+
+                    int ok = 1;
+                    for (int i = 0; i < 20; i++)
+                        if (hashBytes[i + 16] != hash[i])
+                            ok = 0;
 
 
+
+                    if (ok == 1)
+                    {
+                        main_page.E_mail = textBox3.Text;
+                        this.Hide();
+                        textBox3.Clear();
+                        textBox2.Clear();
+                        main_page.ShowDialog();
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Невірний логін або пароль");
+                    }
                 }
-                else
+                catch
                 {
                     MessageBox.Show("Невірний логін або пароль");
                 }
+
 
             }
         }
