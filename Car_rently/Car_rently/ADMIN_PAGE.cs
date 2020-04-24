@@ -20,8 +20,6 @@ namespace Car_rently
             InitializeComponent();
         }
 
-       
-
         static string commandstring = "SELECT * FROM type_of_car;" +
             "SELECT * from penalties; " +
             "select * from available_cars_view;" +
@@ -37,10 +35,17 @@ namespace Car_rently
         SqlDataAdapter adapter = new SqlDataAdapter(commandstring, connectionString); //створюємо екземпляр класу адаптер
         DataSet dataset = new DataSet(); // створюємо датасет(копія бази даних)
 
+        #region ВИХІД З ПРОГРАМИ І ОЧИЩЕННЯ ТЕКСТБОКСА
         private void label12_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
+
+        private void metroTextBox9_Click(object sender, EventArgs e)
+        {
+            metroTextBox9.Clear();
+        }
+        #endregion
 
         #region ЗАПОВНЕННЯ КОМБОБОКСІВ І ТАБЛИЦЬ
         private void ADMIN_PAGE_Load(object sender, EventArgs e)
@@ -94,7 +99,7 @@ namespace Car_rently
         }
         #endregion
 
-        #region ШТРАФИ
+        #region ДОДАВАННЯ ШТРАФІВ
         private void button2_Click(object sender, EventArgs e)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -121,7 +126,7 @@ namespace Car_rently
         }
         #endregion
 
-        #region ЗНИЖКИ
+        #region ДОДАВАННЯ ЗНИЖОК
         private void button3_Click_1(object sender, EventArgs e)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -201,22 +206,25 @@ namespace Car_rently
                 SqlCommand command = new SqlCommand();
 
                 command.Connection = connection;
-                command.CommandText = "(SELECT Id_type FROM type_of_car WHERE type_name like '" + metroComboBox1.Text + "')";
+                command.CommandText = "(SELECT Id_type FROM type_of_car WHERE type_name like @type_name)";
+                command.Parameters.AddWithValue("@type_name", metroComboBox1.Text);
                 string type = command.ExecuteScalar().ToString();
 
 
-                command.CommandText = "(SELECT Id_brand FROM cars_brand WHERE brand_name like '" + metroTextBox1.Text + "')";
+                command.CommandText = "(SELECT Id_brand FROM cars_brand WHERE brand_name like @brand_name)";
+                command.Parameters.AddWithValue("@brand_name", brand_name);
                 int i = Convert.ToInt32(command.ExecuteScalar());
+                command.Parameters.Clear();
                 if (i == 0)
                 {
                     command.CommandText = "insert into cars_brand (brand_name) values(@brand_name)";
-
-                    command.Parameters.Add("@brand_name", SqlDbType.VarChar, 30);
-                    command.Parameters["@brand_name"].Value = brand_name;
+                    command.Parameters.AddWithValue("@brand_name", brand_name);
                     command.ExecuteNonQuery();
+                    command.Parameters.Clear();
                 }
 
-                command.CommandText = "(SELECT Id_brand FROM cars_brand WHERE brand_name like '" + metroTextBox1.Text + "')";
+                command.CommandText = "(SELECT Id_brand FROM cars_brand WHERE brand_name like @brand_name)";
+                command.Parameters.AddWithValue("@brand_name", brand_name);
                 string brand = command.ExecuteScalar().ToString();
 
                 command.CommandText = "insert into cars (Id_type, car_model, year, cost, price, picture,Id_brand) values (@type,@model,@year,@cost,@price,@picture,@brand)";
@@ -232,7 +240,7 @@ namespace Car_rently
                 command.Parameters.Add("@price", SqlDbType.Int);
                 command.Parameters.Add("@picture", SqlDbType.VarBinary);
 
-                // передаем данные в команду через параметры
+                // Передаємо дані в команду через параметри
                 command.Parameters["@type"].Value = type;
                 command.Parameters["@brand"].Value = brand;
                 command.Parameters["@model"].Value = model;
@@ -241,7 +249,7 @@ namespace Car_rently
                 command.Parameters["@price"].Value = price;
                 command.Parameters["@picture"].Value = arr;
                 command.ExecuteNonQuery();
-                MessageBox.Show("Данні додано!");
+                MessageBox.Show("Дані додано!");
 
                 metroTextBox1.Clear();
                 metroTextBox2.Clear();
@@ -256,7 +264,6 @@ namespace Car_rently
 
         }
         #endregion
-
 
         #region ВСІ ДЕЛІТИ
         private void button8_Click(object sender, EventArgs e)
@@ -335,8 +342,6 @@ namespace Car_rently
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                try
-                {
                     connection.Open();
                     adapter.DeleteCommand = new SqlCommand("DELETE FROM client WHERE id_client = @id", connection);
                     int id = int.Parse(dataGridView4.CurrentRow.Cells[0].Value.ToString());
@@ -346,16 +351,13 @@ namespace Car_rently
                     dataset.Clear();
                     adapter.Fill(dataset);
                     MessageBox.Show("Клієнта видалено");
-                }
-                catch
-                {
-                    MessageBox.Show("Видалити не вдалось!");
-                }
+
             }
 
         }
         #endregion
 
+        #region ВИВЕСТИ ЗАМОВЛЕННЯ ДЛЯ ЗАКРИТТЯ
         private void button14_Click(object sender, EventArgs e)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -366,7 +368,9 @@ namespace Car_rently
                 SqlCommand command = new SqlCommand();
 
                 command.Connection = connection;
-                command.CommandText = "(SELECT rent.Id_rent, brand_name,picture,car_model,lease_date,return_date,total_amount FROM rent JOIN client ON rent.Id_client = client.Id_client JOIN cars ON rent.Id_car = cars.Id_car lEFT OUTER JOIN rent_penalty ON rent.Id_rent = rent_penalty.Id_rent JOIN cars_brand ON cars.Id_brand = cars_brand.Id_brand WHERE E_mail = '" + metroTextBox9.Text + "' AND rent_penalty.Id_rent IS NULL)";
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandText = "close_order";
+                command.Parameters.AddWithValue("@E_mail", metroTextBox9.Text);
                 int i = Convert.ToInt32(command.ExecuteScalar());
                 SqlDataReader thisReader = command.ExecuteReader();
 
@@ -408,7 +412,6 @@ namespace Car_rently
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             int summ = 0;
             int index = 0;
             foreach (int indexChecked in checkedListBox1.CheckedIndices)
@@ -421,21 +424,18 @@ namespace Car_rently
             }
             if (index != 0)
             {
-
-
                 foreach (object item in checkedListBox1.CheckedItems)
                 {
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
-
                         connection.Open();
-
                         SqlCommand command = new SqlCommand();
                         command.Connection = connection;
 
                         string curItemString = ((DataRowView)item)[checkedListBox1.DisplayMember].ToString();
 
-                        command.CommandText = "(SELECT amount_penalty FROM penalties WHERE penalty_name = '" + curItemString + "')";
+                        command.CommandText = "(SELECT amount_penalty FROM penalties WHERE penalty_name = @penalty_name)";
+                        command.Parameters.AddWithValue("@penalty_name", curItemString);
 
                         SqlDataReader thisReader = command.ExecuteReader();
                         while (thisReader.Read())
@@ -448,10 +448,13 @@ namespace Car_rently
                 }
                 label28.Text = summ.ToString();
             }
-            else { label28.Text = "0"; }
+            else
+            {
+                label28.Text = "0";
+            }
+
             try
             {
-
                 if (label28.Text != "0")
                 {
                     double first = Convert.ToDouble(label29.Text);
@@ -467,24 +470,24 @@ namespace Car_rently
                 MessageBox.Show("Введіть E_mail!");
             }
         }
+        #endregion
 
+        #region ЗАКРИТИ ЗАМОВЛЕННЯ
         private void button15_Click(object sender, EventArgs e)
         {
-
             string penalty = "";
             foreach (object item in checkedListBox1.CheckedItems)
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-
                     connection.Open();
-
                     SqlCommand command = new SqlCommand();
                     command.Connection = connection;
 
                     string curItemString = ((DataRowView)item)[checkedListBox1.DisplayMember].ToString();
 
-                    command.CommandText = "(SELECT Id_penalty FROM penalties WHERE penalty_name = '" + curItemString + "')";
+                    command.CommandText = "(SELECT Id_penalty FROM penalties WHERE penalty_name = @penalty_name)";
+                    command.Parameters.AddWithValue("@penalty_name", curItemString);
 
                     SqlDataReader thisReader = command.ExecuteReader();
                     while (thisReader.Read())
@@ -494,7 +497,6 @@ namespace Car_rently
 
                     }
                 }
-
             }
             int rent = Convert.ToInt32(label30.Text);
             int[] arr = penalty.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(k => int.Parse(k.Trim())).ToArray();
@@ -510,24 +512,18 @@ namespace Car_rently
 
                         int pen = arr[i];
                         command.CommandText = "insert into rent_penalty (Id_penalty, Id_rent) values(@Id_penalty,@Id_rent)";
-
-
-
-
-                        command.Parameters.Add("@Id_penalty", SqlDbType.Int);
-                        command.Parameters.Add("@Id_rent", SqlDbType.Int);
-
-                        command.Parameters["@Id_penalty"].Value = pen;
-                        command.Parameters["@Id_rent"].Value = rent;
+                        command.Parameters.AddWithValue("@Id_penalty", pen);
+                        command.Parameters.AddWithValue("@Id_rent", rent);
 
                         command.ExecuteNonQuery();
+                        command.Parameters.Clear();
                         double amount = Convert.ToDouble(label16.Text);
-                        command.CommandText = "UPDATE rent SET total_amount = '" +Math.Round(amount) + "' WHERE Id_rent = '" + rent + "';";
-                        command.ExecuteNonQuery();                        
+                        command.CommandText = "UPDATE rent SET total_amount = @total_amount WHERE Id_rent = @Id_rent;";
+                        command.Parameters.AddWithValue("@total_amount", Math.Round(amount));
+                        command.Parameters.AddWithValue("@Id_rent", rent);
 
-
-
-
+                        command.ExecuteNonQuery();
+                        command.Parameters.Clear();
                     }
                 }
             }
@@ -539,16 +535,9 @@ namespace Car_rently
                     SqlCommand command = new SqlCommand();
                     command.Connection = connection;
                     command.CommandText = "insert into rent_penalty ( Id_rent) values(@Id_rent)";
-
-                    command.Parameters.Add("@Id_rent", SqlDbType.Int);
-
-                    command.Parameters["@Id_rent"].Value = rent;
+                    command.Parameters.AddWithValue("@Id_rent", rent);
 
                     command.ExecuteNonQuery();
-
-
-
-
                 }
             }
             dataset.Clear();
@@ -560,13 +549,9 @@ namespace Car_rently
 
 
         }
+        #endregion
 
-        private void metroTextBox9_Click(object sender, EventArgs e)
-        {
-            metroTextBox9.Clear();
-        }
-
-
+        #region ВСІ АПДЕЙТИ
         private void button6_Click(object sender, EventArgs e)
         {
             string sqlExpression = "update_penalties";
@@ -645,17 +630,6 @@ namespace Car_rently
             }
         }
 
-        private void button13_Click(object sender, EventArgs e)
-        {
-
-            CHANGE_CURRENT_ORDER change_current_order = new CHANGE_CURRENT_ORDER();
-            change_current_order.Id_rent = Convert.ToInt32(dataGridView5.CurrentRow.Cells[0].Value);
-
-
-            change_current_order.Show();
-
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
             string sqlExpression = "update_cars";
@@ -677,5 +651,18 @@ namespace Car_rently
                 MessageBox.Show("Данні змінено!");
             }
         }
+        #endregion
+        
+        #region ВІДКРИТЯ ФОРМИ РЕДАГУВАННЯ ЗАМОВЛЕННЯ
+        private void button13_Click(object sender, EventArgs e)
+        {
+            CHANGE_CURRENT_ORDER change_current_order = new CHANGE_CURRENT_ORDER();
+            change_current_order.Id_rent = Convert.ToInt32(dataGridView5.CurrentRow.Cells[0].Value);
+            change_current_order.Show();
+
+        }
+        #endregion
+
+
     }
 }

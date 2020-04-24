@@ -28,9 +28,9 @@ namespace Car_rently
         int count = 0;
         static string commandstring = "select distinct brand_name from available_cars_view; ";
         static string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
         SqlDataAdapter adapter = new SqlDataAdapter(commandstring, connectionString); //створюємо екземпляр класу адаптер
         DataSet dataset = new DataSet(); // створюємо датасет(копія бази даних)
-
 
         public MAIN_PAGE()
         {

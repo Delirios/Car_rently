@@ -48,9 +48,9 @@ namespace Car_rently
             textBox1.ForeColor = Color.WhiteSmoke;
         }
 
+        #region ЛОГІН І ПАРОЛЬ АДМІНА
         private void button1_Click(object sender, EventArgs e)
-        {
-            
+        {           
             if (textBox1.Text == "1" && textBox2.Text == "1") 
             {
                 ADMIN_PAGE admin_page = new ADMIN_PAGE();
@@ -60,8 +60,9 @@ namespace Car_rently
             }
             else 
             {
-                MessageBox.Show("Неверный пароль или логин", "Ошибка"); 
+                MessageBox.Show("Невірний логін або пароль", "Помилка"); 
             }
         }
+        #endregion
     }
 }

@@ -65,8 +65,7 @@ namespace Car_rently
             InitializeComponent();
         }
 
-
-
+        #region БРОНЮВАННЯ АВТО
         private void button3_Click(object sender, EventArgs e)
         {
             try
@@ -79,16 +78,19 @@ namespace Car_rently
                     SqlCommand command = new SqlCommand();
 
                     command.Connection = connection;
-                    command.CommandText = "(SELECT Id_client FROM client WHERE E_mail like '" + e_mail + "')";
+                    command.CommandText = "(SELECT Id_client FROM client WHERE E_mail like @E_mail)";
+                    command.Parameters.AddWithValue("@E_mail", e_mail);
                     int Id_client = Convert.ToInt32(command.ExecuteScalar());
                     int Id_discount = 0;
                     try
                     {
-                        command.CommandText = "(SELECT Id_discount FROM discounts WHERE discount_name like'" + metroComboBox1.Text + "')";
+                        command.CommandText = "(SELECT Id_discount FROM discounts WHERE discount_name like @discount_name)";
+                        command.Parameters.AddWithValue("@discount_name", metroComboBox1.Text);
                         Id_discount = Convert.ToInt32(command.ExecuteScalar());
                     }
                     catch
                     {
+
                     }
 
                     if (Convert.ToInt32(Id_discount) != 0)
@@ -105,7 +107,7 @@ namespace Car_rently
                         command.Parameters.Add("@rental_days", SqlDbType.Int);
                         command.Parameters.Add("@total_amount", SqlDbType.Float);
 
-                        // передаем данные в команду через параметры
+                        // Передаємо дані в команду через параметри
                         command.Parameters["@Id_client"].Value = Id_client;
                         command.Parameters["@Id_car"].Value = id_car;
                         command.Parameters["@Id_discount"].Value = Id_discount;
@@ -128,7 +130,7 @@ namespace Car_rently
                         command.Parameters.Add("@rental_days", SqlDbType.Int);
                         command.Parameters.Add("@total_amount", SqlDbType.Float);
 
-                        // передаем данные в команду через параметры
+                        // Передаємо дані в команду через параметри
                         command.Parameters["@Id_client"].Value = Id_client;
                         command.Parameters["@Id_car"].Value = id_car;
                         command.Parameters["@lease_date"].Value = metroDateTime1.Value;
@@ -145,10 +147,11 @@ namespace Car_rently
             {
                 MessageBox.Show("Некоректний ввід!");
             }
-
         }
+        #endregion
 
-            private void metroDateTime2_ValueChanged(object sender, EventArgs e)
+        #region ПІДРАХУНОК ВАРТОСТІ
+        private void metroDateTime2_ValueChanged(object sender, EventArgs e)
         {
             DateTime start = metroDateTime1.Value;
             DateTime end = metroDateTime2.Value;
@@ -181,7 +184,6 @@ namespace Car_rently
             
         }
 
-        
         private void metroDateTime1_ValueChanged(object sender, EventArgs e)
         {
             metroDateTime1.MinDate = DateTime.Today;
@@ -217,6 +219,9 @@ namespace Car_rently
 
             }
         }
+        #endregion
+        
+        #region ЗАВАНТАЖЕННЯ ФОРМИ
 
         private void ORDER_PAGE_Load(object sender, EventArgs e)
         {
@@ -226,7 +231,8 @@ namespace Car_rently
                 connection.Open();
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(Id_rent_penalty) FROM rent_penalty rp JOIN rent r ON rp.Id_rent = r.Id_rent JOIN client c ON r.Id_client = c.Id_client WHERE c.E_mail = '" + e_mail + "'";
+                command.CommandText = "SELECT COUNT(Id_rent_penalty) FROM rent_penalty JOIN rent ON rent_penalty.Id_rent = rent.Id_rent JOIN client ON rent.Id_client = client.Id_client WHERE client.E_mail = @E_mail";
+                command.Parameters.AddWithValue("@E_mail", e_mail);
                 count =Convert.ToInt32( command.ExecuteScalar());
             }
             if (count >= 5)
@@ -252,6 +258,9 @@ namespace Car_rently
                 label26.Text = ("Замовте 5 авто, щоб отримати знижку постійного клієнта");
             }
         }
+        #endregion
+
+        #region ПІДРАХУНОК ЗНИЖКИ
 
         private void metroComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -262,20 +271,16 @@ namespace Car_rently
                     connection.Open();
                     SqlCommand command = new SqlCommand();
                     command.Connection = connection;
-                    command.CommandText = "SELECT discount_percent FROM discounts WHERE discount_name = '" + metroComboBox1.Text + "'";
+                    command.CommandText = "SELECT discount_percent FROM discounts WHERE discount_name = @discount_name";
+                    command.Parameters.AddWithValue("@discount_name", metroComboBox1.Text);
                     SqlDataReader thisReader = command.ExecuteReader();
                     while (thisReader.Read())
                     {
                         label18.Text = thisReader["discount_percent"].ToString();
-
                     }
                 }
             }
-            /*/
-            else
-            {
-                label18.Text = "";
-            }/*/
+
             if (label18.Text != "")
             {
                 try
@@ -288,25 +293,19 @@ namespace Car_rently
                 }
                 catch
                 {
-                    //wMessageBox.Show("Не всі поля заповнені");
+                    //MessageBox.Show("Не всі поля заповнені");
                 }
             }
-
-
-
-
-
         }
+        #endregion
 
+        #region ЗАКРИТТЯ ФОРМИ
         private void label19_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+        #endregion
 
-        private void label22_Click(object sender, EventArgs e)
-        {
-
-        }
         #region ПЕРЕТЯГУВАННЯ ФОРМИ
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {

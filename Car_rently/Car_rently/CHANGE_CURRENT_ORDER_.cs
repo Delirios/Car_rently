@@ -13,8 +13,7 @@ using System.Windows.Forms;
 namespace Car_rently
 {
     public partial class CHANGE_CURRENT_ORDER: Form
-    {
-        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+    {      
         private int id_rent;
         public int Id_rent
         {
@@ -27,11 +26,11 @@ namespace Car_rently
             InitializeComponent();
         }
 
+        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-
+        #region АПДЕЙТ ЗАМОВЛЕННЯ
         private void button3_Click(object sender, EventArgs e)
         {
-
             string sqlExpression = "update_order";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -51,7 +50,9 @@ namespace Car_rently
             }
 
         }
+        #endregion
 
+        #region ПІДПРАХУНОК ВАРТОСТІ
         private void metroDateTime2_ValueChanged(object sender, EventArgs e)
         {
             try
@@ -70,11 +71,10 @@ namespace Car_rently
             {
 
             }
-
         }
+        #endregion
 
-        
-
+        #region ЗАВАНТАЖЕННЯ ФОРМИ
         private void CHANGE_CURRENT_ORDER_Load(object sender, EventArgs e)
         {
             label27.Text = id_rent.ToString();
@@ -104,24 +104,20 @@ namespace Car_rently
                     label20.Text = thisReader["total_amount"].ToString();
                     metroDateTime1.Value = DateTime.Parse( thisReader["lease_date"].ToString());
                     metroDateTime2.Value = DateTime.Parse(thisReader["return_date"].ToString());
-                    label15.Text = thisReader["rental_days"].ToString();
-              
+                    label15.Text = thisReader["rental_days"].ToString();              
                 }
             }
-
-
         }
+        #endregion
 
+        #region ЗАКРИТТЯ ФОРМИ
         private void label19_Click(object sender, EventArgs e)
         {
 
             this.Close();
         }
+        #endregion
 
-        private void label22_Click(object sender, EventArgs e)
-        {
-
-        }
         #region ПЕРЕТЯГУВАННЯ ФОРМИ
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {

@@ -22,21 +22,6 @@ namespace Car_rently
         }
         string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-
-
-
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            SIGN_UP sign_up = new SIGN_UP();
-
-           
-            this.Hide();
-            sign_up.ShowDialog();
-
-
-        }
-
         private void textBox3_Click(object sender, EventArgs e)
         {
             textBox3.Clear();
@@ -60,11 +45,23 @@ namespace Car_rently
             textBox3.ForeColor = Color.WhiteSmoke;
         }
 
+        #region ВІДКРИТТЯ ФОРМИ ДЛЯ РЕЄСТРАЦІЇ
+        private void button3_Click(object sender, EventArgs e)
+        {
+            SIGN_UP sign_up = new SIGN_UP();
+            this.Hide();
+            sign_up.ShowDialog();
+        }
+        #endregion
+
+        #region ВИХІД З ПРОГРАМИ
         private void label2_Click(object sender, EventArgs e)
         {
             Close();
         }
+        #endregion
 
+        #region ВІДКРИТТЯ ФОРМИ ДЛЯ ВХОДУ ЯК АДМІН
         private void button4_Click(object sender, EventArgs e)
         {
             ADMIN_START_PAGE admin_page = new ADMIN_START_PAGE();
@@ -73,18 +70,21 @@ namespace Car_rently
             admin_page.ShowDialog();
             //this.Show();
         }
+        #endregion
 
+        #region АВТОРИЗАЦІЯ КЛІЄНТА
         private void button1_Click(object sender, EventArgs e)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 MAIN_PAGE main_page = new MAIN_PAGE();
                 string sql = "select * from client WHERE client.E_mail = '" + textBox3.Text + "'";
+
                 connection.Open();
 
-                SqlDataAdapter sda = new SqlDataAdapter(sql,connection);
+                SqlDataAdapter adapter = new SqlDataAdapter(sql,connection);
                 DataTable dtbl = new DataTable();
-                sda.Fill(dtbl);
+                adapter.Fill(dtbl);
                 try
                 {
                     string savedPasswordHash = dtbl.Rows[0][6].ToString();
@@ -100,9 +100,6 @@ namespace Car_rently
                     for (int i = 0; i < 20; i++)
                         if (hashBytes[i + 16] != hash[i])
                             ok = 0;
-
-
-
                     if (ok == 1)
                     {
                         main_page.E_mail = textBox3.Text;
@@ -110,8 +107,6 @@ namespace Car_rently
                         textBox3.Clear();
                         textBox2.Clear();
                         main_page.ShowDialog();
-
-
                     }
                     else
                     {
@@ -126,7 +121,9 @@ namespace Car_rently
 
             }
         }
+        #endregion
 
+        #region ВІДКРИТТЯ ФОРМИ ДЛЯ ВІДНОВЛЕННЯ ПАРОЛЮ
         private void button2_Click(object sender, EventArgs e)
         {
             FORGOT_PASSWORD_PAGE forgot_password = new FORGOT_PASSWORD_PAGE();
@@ -135,5 +132,6 @@ namespace Car_rently
             this.Hide();
             forgot_password.ShowDialog();
         }
+        #endregion
     }
 }
